@@ -1,0 +1,507 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "默认模块",
+    "description": "",
+    "version": "1.0.0"
+  },
+  "tags": [
+    {
+      "name": "s-match-controller"
+    }
+  ],
+  "paths": {
+    "/s-match": {
+      "get": {
+        "summary": "查询比赛列表",
+        "deprecated": false,
+        "description": "查询比赛列表.\n\n <p>\n 必传字段 gameDrawId\n <p>\n #2025-10-30新增入参字段\n 1.matchNoStartNumber 编号开始范围 ,数字类型 ,非必传\n 2.matchNoEndNumber  编号结束范围 ,数字类型 ,非必传\n 2026-5-15新增入参字段\n 1.gameType 查询游戏 1200足球 ,1270胜负 ,1260下半场比分 ,全部无需传\n\n\n <p>\n ```yaml\n errorCode:\n - 31: 服务异常\n # 字段验证\n - 2: 奖期ID不可为空\n - 2: 奖期不存在\n <p>\n ```",
+        "operationId": "getSMatch",
+        "tags": [
+          "s-match-controller"
+        ],
+        "parameters": [
+          {
+            "name": "gameDrawId",
+            "in": "query",
+            "description": "奖期ID 自增",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "sportIdList",
+            "in": "query",
+            "description": "运动项目id",
+            "required": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "integer",
+                "format": "int32"
+              }
+            }
+          },
+          {
+            "name": "matchNoStartNumber",
+            "in": "query",
+            "description": "编号开始范围",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "matchNoEndNumber",
+            "in": "query",
+            "description": "编号结束范围",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "matchStartTime",
+            "in": "query",
+            "description": "比赛开始时间",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "matchEndTime",
+            "in": "query",
+            "description": "比赛结束时间",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "gameType",
+            "in": "query",
+            "description": "查询游戏 -1200足球 ,1270胜负 ,1260下半场比分 ,全部无需传",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "game1200",
+            "in": "query",
+            "description": "足球单场游戏 , 是否查询足球单场 1是 0否 (前端不需要传)",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "game1270",
+            "in": "query",
+            "description": "胜负过关  ,是否查询足球单场 1是 0否(前端不需要传)",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "game1260",
+            "in": "query",
+            "description": "下半场比分  ,是否查询足球单场 1是 0否(前端不需要传)",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "@CommonResult<List<SMatchResponse>> 比赛列表",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CommonResultListSMatchResponse"
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "MatchupDraftRelationsSeason": {
+        "type": "object",
+        "description": "比赛草稿关联的赛季信息（当前比赛所在赛季）",
+        "properties": {
+          "competitionShortNameZh": {
+            "type": "string",
+            "description": "赛事简称"
+          },
+          "seasonBdShortName": {
+            "type": "string",
+            "description": "赛季北单简称"
+          },
+          "seasonYear": {
+            "type": "string",
+            "description": "赛季年"
+          },
+          "officialWeb": {
+            "type": "string",
+            "description": "官方网站"
+          },
+          "mediaWebName1": {
+            "type": "string",
+            "description": "媒体网站1名称"
+          },
+          "mediaWeb1": {
+            "type": "string",
+            "description": "媒体网站1连接"
+          },
+          "mediaWebName2": {
+            "type": "string",
+            "description": "媒体网站2名称"
+          },
+          "mediaWeb2": {
+            "type": "string",
+            "description": "媒体网站2连接"
+          },
+          "mediaWebName3": {
+            "type": "string",
+            "description": "媒体网站3名称"
+          },
+          "mediaWeb3": {
+            "type": "string",
+            "description": "媒体网站3连接"
+          },
+          "competitionLevel": {
+            "type": "string",
+            "description": "赛事等级 -实际上是该赛事的当前赛季等级"
+          }
+        }
+      },
+      "BeitaiFootballMatchLiveDTO": {
+        "type": "object",
+        "properties": {
+          "matchId": {
+            "type": "integer",
+            "format": "int32",
+            "description": "比赛ID - 主键"
+          },
+          "status": {
+            "type": "string",
+            "description": "比赛状态"
+          },
+          "matchClock": {
+            "type": "string",
+            "description": "比赛进行时间（赛中有值）"
+          },
+          "stoppageClock": {
+            "type": "string",
+            "description": "实际伤停补时时间（赛中有值）"
+          }
+        }
+      },
+      "CommonResultListSMatchResponse": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer",
+            "format": "int32",
+            "description": "错误码，成功取值为0.\n [详情参考链接](https://alidocs.dingtalk.com/i/nodes/ZQYprEoWowXRlEYdfekBjOD5W1waOeDk)"
+          },
+          "message": {
+            "type": "string",
+            "description": "错误信息，成功取值为OK.\n 错误信息格式为：错误描述+换行+系统错误信息，根据不同用户使用环境的要求可对系统错误信息进行裁剪<br/>\n [详情参考链接](https://alidocs.dingtalk.com/i/nodes/nYMoO1rWx2RwME9dS3BQGMomJ47Z3je9?utm_scene=team_space&iframeQuery=anchorId%3Duu_llxgf7cvkj5ol48n5zo)"
+          },
+          "data": {
+            "type": "array",
+            "description": "数据内容 array or object or null.",
+            "items": {
+              "$ref": "#/components/schemas/SMatchResponse"
+            }
+          }
+        }
+      },
+      "SEventEntity": {
+        "type": "object",
+        "properties": {
+          "createTime": {
+            "type": "string",
+            "format": "date-time",
+            "description": "创建时间"
+          },
+          "updateTime": {
+            "type": "string",
+            "format": "date-time",
+            "description": "更新时间"
+          },
+          "createAccount": {
+            "type": "string",
+            "description": "创建账号"
+          },
+          "updateAccount": {
+            "type": "string",
+            "description": "更新账号"
+          },
+          "id": {
+            "type": "string",
+            "description": "事件id"
+          },
+          "eventType": {
+            "type": "integer",
+            "format": "int32",
+            "description": "事件类型 0无异常 1比赛异常 2数据异常 3预警"
+          },
+          "eventLevel": {
+            "type": "string",
+            "description": "告警级别 红色、橙色、黄色、无"
+          },
+          "identityData": {
+            "type": "string",
+            "description": "事件标识数据"
+          },
+          "sourceType": {
+            "type": "string",
+            "description": "事件来源"
+          },
+          "sourceId": {
+            "type": "integer",
+            "format": "int64",
+            "description": "事件来源数据id"
+          },
+          "reasonTitle": {
+            "type": "string",
+            "description": "事件原因标题"
+          },
+          "reasonDesc": {
+            "type": "string",
+            "description": "事件原因详情"
+          },
+          "confirmResult": {
+            "type": "integer",
+            "format": "int32",
+            "description": "对应的是task的状态"
+          }
+        }
+      },
+      "SMatchResponse": {
+        "type": "object",
+        "properties": {
+          "matchId": {
+            "type": "integer",
+            "format": "int32",
+            "description": "比赛Id"
+          },
+          "namiMatchId": {
+            "type": "integer",
+            "format": "int32",
+            "description": "纳米比赛id"
+          },
+          "beitaiMatchId": {
+            "type": "integer",
+            "format": "int32",
+            "description": "贝泰比赛id"
+          },
+          "matchNo": {
+            "type": "string",
+            "description": "编号"
+          },
+          "matchupUniqueNo": {
+            "type": "string",
+            "description": "比赛编号"
+          },
+          "sportId": {
+            "type": "integer",
+            "format": "int32",
+            "description": "运动项目"
+          },
+          "relationsSeason": {
+            "$ref": "#/components/schemas/MatchupDraftRelationsSeason",
+            "description": "当前比赛所在赛季的媒体网站相关信息"
+          },
+          "bdRound": {
+            "type": "string",
+            "description": "轮次"
+          },
+          "matchTime": {
+            "type": "string",
+            "format": "date-time",
+            "description": "开赛时间"
+          },
+          "homeTeamNameZh": {
+            "type": "string",
+            "description": "主队全称"
+          },
+          "awayTeamNameZh": {
+            "type": "string",
+            "description": "客队全称"
+          },
+          "homeSeasonBdTeamName": {
+            "type": "string",
+            "description": "主队北单全称"
+          },
+          "awaySeasonBdTeamName": {
+            "type": "string",
+            "description": "客队北单全称"
+          },
+          "homeTeamOfficialWeb": {
+            "type": "string",
+            "description": "主队官网链接"
+          },
+          "awayTeamOfficialWeb": {
+            "type": "string",
+            "description": "客队官网链接"
+          },
+          "homePosition": {
+            "type": "string",
+            "description": "主队排名"
+          },
+          "awayPosition": {
+            "type": "string",
+            "description": "客队排名"
+          },
+          "matchBaseStatus": {
+            "type": "integer",
+            "format": "int32",
+            "description": "比赛基础状态"
+          },
+          "homeScore": {
+            "type": "integer",
+            "format": "int32",
+            "description": "主队比分"
+          },
+          "awayScore": {
+            "type": "integer",
+            "format": "int32",
+            "description": "客队比分"
+          },
+          "homeScoreHalf": {
+            "type": "integer",
+            "format": "int32",
+            "description": "主队半场比分"
+          },
+          "awayScoreHalf": {
+            "type": "integer",
+            "format": "int32",
+            "description": "客队半场比分"
+          },
+          "matchResultStatus": {
+            "type": "integer",
+            "format": "int32",
+            "description": "赛果状态  0未确认 ,1 已确认  ,3 未审核  4 已审核"
+          },
+          "warningCount": {
+            "type": "integer",
+            "format": "int32",
+            "description": "告警数量"
+          },
+          "changeCount": {
+            "type": "integer",
+            "format": "int32",
+            "description": "变更数量"
+          },
+          "preWarningCount": {
+            "type": "integer",
+            "format": "int32",
+            "description": "预警数量"
+          },
+          "remarkCount": {
+            "type": "integer",
+            "format": "int32",
+            "description": "备注数量"
+          },
+          "eventCount": {
+            "type": "integer",
+            "format": "int32",
+            "description": "事件统计"
+          },
+          "monitorTime": {
+            "type": "string",
+            "format": "date-time",
+            "description": "监控记录"
+          },
+          "prized": {
+            "type": "integer",
+            "format": "int32",
+            "description": "开奖状态 0未开奖 1已开奖"
+          },
+          "defaultSortOrder": {
+            "type": "integer",
+            "format": "int32",
+            "description": "赛事排序序号 比赛列表按赛事显示默认排序序号,null使用默认赛事更新时间倒序排"
+          },
+          "selectSortOrder": {
+            "type": "integer",
+            "format": "int32",
+            "description": "赛事筛选排序序号 比赛列表赛事简称赛事选择默认排序,null使用默认赛事更新时间倒序排"
+          },
+          "bdMatchupHomeTeamId": {
+            "type": "integer",
+            "format": "int32",
+            "description": "正式赛程中的主队id"
+          },
+          "homeTeamId": {
+            "type": "integer",
+            "format": "int32",
+            "description": "s-match中的主队id"
+          },
+          "awayTeamId": {
+            "type": "integer",
+            "format": "int32",
+            "description": "s-match中的客队id"
+          },
+          "bdScheduleHomeTeamId": {
+            "type": "integer",
+            "format": "int32",
+            "description": "正式赛程表主队id"
+          },
+          "bdScheduleAwayTeamId": {
+            "type": "integer",
+            "format": "int32",
+            "description": "正式赛程客队id"
+          },
+          "checkAccount": {
+            "type": "string",
+            "description": "审核人员"
+          },
+          "confirmAccount": {
+            "type": "string",
+            "description": "确认人员"
+          },
+          "source": {
+            "type": "integer",
+            "format": "int32",
+            "description": "来源 1:赛果确认 2异常变更"
+          },
+          "beitaiFootballMatchLiveDTO": {
+            "$ref": "#/components/schemas/BeitaiFootballMatchLiveDTO",
+            "description": "该比赛的贝泰直播数据"
+          },
+          "seventEntity": {
+            "$ref": "#/components/schemas/SEventEntity",
+            "description": "比赛事件 -前端用于填充背景颜色"
+          }
+        }
+      }
+    },
+    "responses": {},
+    "securitySchemes": {}
+  },
+  "servers": [],
+  "security": []
+}

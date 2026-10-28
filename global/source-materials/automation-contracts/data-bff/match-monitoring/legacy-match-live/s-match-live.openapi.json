@@ -1,0 +1,821 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "默认模块",
+    "description": "",
+    "version": "1.0.0"
+  },
+  "tags": [
+    {
+      "name": "s-match-controller"
+    }
+  ],
+  "paths": {
+    "/s-match/live": {
+      "get": {
+        "summary": "查询比赛进程信息(纳米)",
+        "deprecated": false,
+        "description": "查询比赛进程信息(纳米).\n\n <p>\n 必传字段  matchId.\n\n <p>\n ```yaml\n errorCode:\n - 31: 服务异常 .\n # 字段验证\n - 2: 比赛ID不可为空 .\n - 2: 查询纳米进程信息时namiMatchId不能为空 ,查询贝泰进程信息时beitaiMatchId不能为空\n <p>\n ```",
+        "operationId": "getSMatchLive",
+        "tags": [
+          "s-match-controller"
+        ],
+        "parameters": [
+          {
+            "name": "matchId",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "seasonId",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "sportId",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "competitionId",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "namiMatchId",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "txMatchId",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "beitaiMatchId",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "manualMatchId",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "homeTeamId",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "bdMatchupHomeTeamId",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "awayTeamId",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "matchRound",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "maxLength": 20,
+              "minLength": 0
+            }
+          },
+          {
+            "name": "matchStage",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "matchGroup",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "statusId",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "matchTime",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "homeScoreHalf",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "awayScoreHalf",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "homeScore",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "awayScore",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "homeScoreAll",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "awayScoreAll",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "homePosition",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "maxLength": 30,
+              "minLength": 0
+            }
+          },
+          {
+            "name": "awayPosition",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "maxLength": 30,
+              "minLength": 0
+            }
+          },
+          {
+            "name": "venueId",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "weather",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "replaceId",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "matchupUniqueNoList",
+            "in": "query",
+            "description": "北单比赛唯一编号",
+            "required": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "name": "homeTeamNameZh",
+            "in": "query",
+            "description": "主队全称",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "homeTeamBlackStatus",
+            "in": "query",
+            "description": "主队黑名单标识，可能为空，在赛程、开奖、事件管理中会设置值\n 0 未在黑名单, 1 在黑名单，默认为 0",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "awayTeamNameZh",
+            "in": "query",
+            "description": "客队全称",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "homeSeasonBdTeamName",
+            "in": "query",
+            "description": "主队北单全称，可能为空，在赛程、开奖、事件管理中会设置值",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "awaySeasonBdTeamName",
+            "in": "query",
+            "description": "客队北单全称，可能为空，在赛程、开奖、事件管理中会设置值",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "homeTeamOfficialWeb",
+            "in": "query",
+            "description": "主队官网链接，可能为空，在赛程、开奖、事件管理中会设置值",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "awayTeamOfficialWeb",
+            "in": "query",
+            "description": "客队官网链接，可能为空，在赛程、开奖、事件管理中会设置值",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "awayTeamBlackStatus",
+            "in": "query",
+            "description": "客队黑名单标识，可能为空，在赛程、开奖、事件管理中会设置值\n 0 未在黑名单, 1 在黑名单，默认为 0",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "competitionShortNameZh",
+            "in": "query",
+            "description": "赛事简称",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "seasonBdName",
+            "in": "query",
+            "description": "赛季北单全称，可能为空，在赛程、开奖、事件管理中会设置值",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "seasonBdShortName",
+            "in": "query",
+            "description": "赛季北单简称",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "competitionBlackStatus",
+            "in": "query",
+            "description": "赛事黑名单标识，可能为空，在赛程、开奖、事件管理中会设置值\n 0 未在黑名单, 1 在黑名单，默认为 0",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "checkStatus",
+            "in": "query",
+            "description": "复选框选中状态，可能为空，在赛程、开奖、事件管理中会设置值\n 0 置灰 1 可选  2 选中",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "matchBaseStatus",
+            "in": "query",
+            "description": "比赛基础状态",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "matchRelationMatchupTeam.bdMatchupHomeTeamId",
+            "in": "query",
+            "description": "赛程关联的主队ID",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "matchRelationMatchupTeam.bdMatchupAwayTeamId",
+            "in": "query",
+            "description": "赛程关联的客队ID",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "matchRelationMatchupTeam.bdMatchupHomeScoreHalf",
+            "in": "query",
+            "description": "主队半场比分",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "matchRelationMatchupTeam.bdMatchupAwayScoreHalf",
+            "in": "query",
+            "description": "客队半场比分",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "matchRelationMatchupTeam.bdMatchupHomeScore",
+            "in": "query",
+            "description": "主队常规时间内的全场比分",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "matchRelationMatchupTeam.bdMatchupAwayScore",
+            "in": "query",
+            "description": "客队常规时间内的全场比分",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "matchRelationMatchupTeam.bdMatchupHomeScoreAll",
+            "in": "query",
+            "description": "主队所有比分包括加时赛",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "matchRelationMatchupTeam.bdMatchupAwayScoreAll",
+            "in": "query",
+            "description": "客队所有比分包括加时赛",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "matchRelationMatchupTeam.bdMatchupHomePosition",
+            "in": "query",
+            "description": "主队排名",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "matchRelationMatchupTeam.bdMatchupAwayPosition",
+            "in": "query",
+            "description": "客队排名",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "createTime",
+            "in": "query",
+            "description": "创建时间",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "updateTime",
+            "in": "query",
+            "description": "更新时间",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "createAccount",
+            "in": "query",
+            "description": "创建账号",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "updateAccount",
+            "in": "query",
+            "description": "更新账号",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "@CommonResult<SMatchLiveIncidentsResponse> 比赛进程信息",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CommonResultSMatchLiveIncidentsResponse"
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "BeitaiFootballEventEntity": {
+        "type": "object",
+        "properties": {
+          "createTime": {
+            "type": "string",
+            "format": "date-time",
+            "description": "创建时间"
+          },
+          "updateTime": {
+            "type": "string",
+            "format": "date-time",
+            "description": "更新时间"
+          },
+          "eventId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "matchId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "clock": {
+            "type": "string",
+            "maxLength": 20,
+            "minLength": 0
+          },
+          "orderId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "matchTime": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "stoppageTime": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "stoppageTimeClock": {
+            "type": "string",
+            "maxLength": 20,
+            "minLength": 0
+          },
+          "injuryTimeAnnounced": {
+            "type": "string",
+            "maxLength": 20,
+            "minLength": 0
+          },
+          "period": {
+            "type": "string",
+            "maxLength": 50,
+            "minLength": 0
+          },
+          "eventType": {
+            "type": "string",
+            "maxLength": 50,
+            "minLength": 0
+          },
+          "team": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "playerId1": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "playerId2": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "playerName1": {
+            "type": "string",
+            "maxLength": 255,
+            "minLength": 0
+          },
+          "playerName2": {
+            "type": "string",
+            "maxLength": 255,
+            "minLength": 0
+          },
+          "playerType1": {
+            "type": "string",
+            "maxLength": 50,
+            "minLength": 0
+          },
+          "playerType2": {
+            "type": "string",
+            "maxLength": 50,
+            "minLength": 0
+          },
+          "method": {
+            "type": "string",
+            "maxLength": 50,
+            "minLength": 0
+          },
+          "status": {
+            "type": "string",
+            "maxLength": 50,
+            "minLength": 0
+          },
+          "coordX": {
+            "type": "string",
+            "maxLength": 20,
+            "minLength": 0
+          },
+          "coordY": {
+            "type": "string",
+            "maxLength": 20,
+            "minLength": 0
+          },
+          "text": {
+            "type": "string"
+          },
+          "homeScore": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "awayScore": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "cardDescription": {
+            "type": "string",
+            "maxLength": 100,
+            "minLength": 0
+          },
+          "eventTime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "position": {
+            "type": "integer",
+            "format": "int32",
+            "description": "事件发生方  0-中立、1-主队、2-客队"
+          }
+        }
+      },
+      "CommonResultSMatchLiveIncidentsResponse": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer",
+            "format": "int32",
+            "description": "错误码，成功取值为0.\n [详情参考链接](https://alidocs.dingtalk.com/i/nodes/ZQYprEoWowXRlEYdfekBjOD5W1waOeDk)"
+          },
+          "message": {
+            "type": "string",
+            "description": "错误信息，成功取值为OK.\n 错误信息格式为：错误描述+换行+系统错误信息，根据不同用户使用环境的要求可对系统错误信息进行裁剪<br/>\n [详情参考链接](https://alidocs.dingtalk.com/i/nodes/nYMoO1rWx2RwME9dS3BQGMomJ47Z3je9?utm_scene=team_space&iframeQuery=anchorId%3Duu_llxgf7cvkj5ol48n5zo)"
+          },
+          "data": {
+            "$ref": "#/components/schemas/SMatchLiveIncidentsResponse",
+            "description": "数据内容 array or object or null."
+          }
+        }
+      },
+      "SMatchLiveIncidentsDTO": {
+        "type": "object",
+        "properties": {
+          "time": {
+            "type": "integer",
+            "format": "int32",
+            "description": "比赛时间 -分钟"
+          },
+          "type": {
+            "type": "integer",
+            "format": "int32",
+            "description": "事件类型"
+          },
+          "second": {
+            "type": "integer",
+            "format": "int32",
+            "description": "比赛事件 -秒"
+          },
+          "position": {
+            "type": "integer",
+            "format": "int32",
+            "description": "事件发生方  0-中立、1-主队、2-客队"
+          },
+          "playerName": {
+            "type": "string",
+            "description": "相关球员名称"
+          },
+          "homeScore": {
+            "type": "integer",
+            "format": "int32",
+            "description": "主队比分"
+          },
+          "awayScore": {
+            "type": "integer",
+            "format": "int32",
+            "description": "客队比分"
+          },
+          "inPlayerName": {
+            "type": "string",
+            "description": "换上球员名称"
+          },
+          "outPlayerName": {
+            "type": "string",
+            "description": "换下球员名称"
+          }
+        }
+      },
+      "SMatchLiveIncidentsResponse": {
+        "type": "object",
+        "properties": {
+          "matchBaseStatus": {
+            "type": "integer",
+            "format": "int32",
+            "description": "比赛状态"
+          },
+          "liveIncidents": {
+            "type": "array",
+            "description": "进程信息",
+            "items": {
+              "$ref": "#/components/schemas/SMatchLiveIncidentsDTO"
+            }
+          },
+          "beitaiLiveIncidents": {
+            "type": "array",
+            "description": "贝泰进程信息",
+            "items": {
+              "$ref": "#/components/schemas/BeitaiFootballEventEntity"
+            }
+          }
+        }
+      }
+    },
+    "responses": {},
+    "securitySchemes": {}
+  },
+  "servers": [],
+  "security": []
+}
