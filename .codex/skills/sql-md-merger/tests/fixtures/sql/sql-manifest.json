@@ -1,0 +1,43 @@
+{
+  "schema_version": "tp-test-case-generation/sql-assets-v1",
+  "assets": [
+    {
+      "sql_id": "SQL-TP001-SELECT",
+      "file": "SQL-TP001-SELECT.sql",
+      "statement_type": "SELECT",
+      "purpose": "按专用账号查询开奖监督平台的有效账号-角色-权限关系链，用于核对查询入口权限",
+      "data_closure_refs": ["DC-002"],
+      "parameters": {
+        "ACCOUNT": {"description": "权限测试专用账号", "example": "qa_user"}
+      }
+    },
+    {
+      "sql_id": "SQL-TP002-TITLE-OVERRIDE",
+      "file": "SQL-TP002-TITLE-OVERRIDE.sql",
+      "statement_type": "SELECT",
+      "purpose": "unused purpose because file has -- title: comment",
+      "data_closure_refs": ["DC-001"],
+      "parameters": {}
+    },
+    {
+      "sql_id": "SQL-TP003-WRITE-PREP",
+      "file": "SQL-TP003-WRITE-PREP.sql",
+      "statement_type": "INSERT",
+      "purpose": "准备专用批次样本",
+      "data_closure_refs": ["DC-001"],
+      "parameters": {}
+    },
+    {
+      "sql_id": "SQL-TP004-MANUAL-CN",
+      "file": "SQL-TP004-MANUAL-CN.sql",
+      "statement_type": "SELECT",
+      "title_cn": "清单字段核对查询",
+      "purpose": "fallback purpose",
+      "data_closure_refs": ["DC-001"],
+      "parameters": {
+        "TASKID": {"description": "审核任务 ID", "example": 30001},
+        "OFFSET": {"description": "零基偏移量", "example": 0}
+      }
+    }
+  ]
+}

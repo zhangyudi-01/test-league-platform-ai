@@ -1,0 +1,4 @@
+interface:
+  display_name: "TP Test Case Generation"
+  short_description: "先规划必要SQL，再分批生成简洁测试用例"
+  default_prompt: "使用 $tp-test-case-generation 先判断并生成模块必要的查询 SQL，再批量生成简单 TP、独立生成复杂 TP，并确定性汇总测试用例。"

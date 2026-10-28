@@ -1,0 +1,4 @@
+interface:
+  display_name: "模块需求前置分析"
+  short_description: "生成RSU逻辑基线、可选数据闭包与跨项目manifest"
+  default_prompt: "使用 $module-requirement-preanalysis 在模块根目录的 preanalysis 子目录中生成或维护原文保真的前置分析产物和 preanalysis/v1 manifest；先通读需求全文并核对读取完整性、建立模块逻辑，用适用共享规则消疑后再按两遍语义拆分建立 RSU，校验来源、引用、数据闭包和目录契约。"

@@ -1,0 +1,40 @@
+# {{MODULE_NAME}} 测试点生成
+
+## 当前目标
+
+按 manifest `rsu_map` 的稳定顺序先规划 RSU 复杂度和兼容批次，再通过模块 Foundation 的独立 fork 有界并行生成候选；全部候选完成后由父 Runner 做精确重复去重和稳定编号。
+
+## 目录职责
+
+| 路径 | 职责 |
+|---|---|
+| `generation-state.json` | 保存 Foundation、计划、批次、逐 RSU 和最终阶段状态，是唯一进度来源 |
+| `generation-plan.json` | 保存复杂度、上下文签名与批次规划 |
+| `inputs/` | 保存每个 RSU 已物化的自包含输入包 |
+| `session-inputs/` | 保存批次 fork 使用的逐 RSU 动态 delta |
+| `batches/`、`batch-results/` | 保存批次输入、私有 staging 和结构化结果 |
+| `by-rsu/` | 保存逐 RSU 候选测试点 |
+| `history/` | 保存输入变化后归档的旧候选 |
+| `finalization-input.md` | 保存全模块精确重复去重与稳定编号输入 |
+| `module-test-points.md` | 保存最终稳定 `TP-ID` |
+| `coverage-matrix.md` | 保存 RSU 覆盖与候选处置 |
+| `case-readiness-input.md` | 保存测试用例生成前的自包含就绪性审查输入 |
+| `test-case-readiness.md` | 保存逐 TP 就绪状态、已闭合输入和待补 `CIQ-ID` |
+
+## 硬约束
+
+- Worker 只能写被授权的批次私有 staging 与 result，父 Runner 独占共享状态提交。
+- 批次 result 支持部分完成；父 Runner 先提交可验证的 `complete` 成员，只重新准备 `draft` / `failed` 成员，非法结果隔离到 `history/batch-results/`。
+- 恢复只读取 `generation-state.json`、计划、私有结果和哈希，不扫描 `runner-logs/` 推断进度。
+- `blocked`、`stale` 或 `replan-required` 未处理前不得进入最终化。
+- 候选必须通过来源、哈希、格式和授权范围校验后才能推进状态。
+- 候选数量不是目标；每个 RSU 合法产生 0～N 个必要候选。
+- 业务列为测试项、包含必要条件和明确预期的测试点、可空的补充备注；默认一候选一 TP，只有三列均完全重复的候选允许合并。
+- 不在本目录生成测试用例、详细前置条件或执行步骤。
+- `test-case-readiness.md` 整体结果不是 `ready` 时，不得进入测试用例生成。
+
+## 路径
+
+- 模块工作区：`{{MODULE_DIR}}`
+- 前置分析目录：`{{PREANALYSIS_DIR}}`
+- 前置分析 Manifest：`{{MANIFEST_PATH}}`

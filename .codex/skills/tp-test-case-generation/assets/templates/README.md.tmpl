@@ -1,0 +1,20 @@
+# {{MODULE_NAME}} - 测试用例生成工作区
+
+此目录由 `tp-test-case-generation` 管理。脚本以 `generation-state.json` 决定唯一允许处理的下一个 `TP-ID`；不要跳号、复制其他 TP 输出或手工修改状态。
+
+## 目录
+
+- `execution-context.md`：安全的环境、观察入口和样本定位资料。
+- 项目根目录 `database.toml`：本地数据库连接配置（若使用 SQL 校验）；不复制到测试用例产物。
+- `sql/`：可复用 SQL 文件、`sql-manifest.json` 和 SQL 验证报告。
+- `baselines/module-baseline.md`：`module-session` 的模块公共基线。
+- `baselines/contexts/<signature>-baseline.md`：按规范化 Context/DC/SQL 组合复用的上下文基线。
+- `baselines/baseline-manifest.json`：基线路径、签名和哈希清单，不是进度状态。
+- `inputs/<TP-ID>-input.md`：完整 TP 上下文闭包，用于审计、复现和 `isolated` 模式。
+- `planning-input.md` / `generation-plan.json`：模块 SQL 需要与批次计划。
+- `sql-generation-input.md`：必要查询 SQL 的统一生成输入。
+- `inputs/BATCH-xxx-input.md`：当前批次输入清单；`inputs/<TP-ID>-delta.md` 为各 TP 增量。
+- `by-tp/`：已准备或已验证的单 TP 用例文档。
+- `finalization-input.md`：全部已验证来源用例的归并输入。
+- `module-test-cases.md`、`coverage-matrix.md`：待校验或已验证的模块最终产物。
+- `history/`：上游输入漂移或刷新后归档的旧生成产物。

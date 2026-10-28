@@ -1,0 +1,4 @@
+interface:
+  display_name: "逐 RSU 测试点生成"
+  short_description: "逐RSU生成测试点并审查用例输入就绪性"
+  default_prompt: "使用 $rsu-test-point-generation 读取指定模块的 preanalysis/v1 manifest，按当前状态生成并校验下一个 RSU 候选、完成模块测试点汇总与发布，或执行测试用例输入就绪性审查。"

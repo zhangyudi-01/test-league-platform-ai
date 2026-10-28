@@ -1,0 +1,52 @@
+# {{RSU_ID}} 测试点生成输入
+
+## 任务
+
+只为 `{{RSU_ID}}` 生成 `0～N` 个测试点候选。不要生成后续 RSU，不要生成测试用例、详细前置条件或执行步骤。
+
+## 输入清单
+
+- 输入 SHA-256：`{{INPUT_SHA256}}`
+- 当前来源：`{{CURRENT_SOURCE_ID}}`
+- 允许的 Source RSUs：{{ALLOWED_RSU_IDS}}
+- 允许的 Question Refs：{{ALLOWED_Q_IDS}}
+- 允许的 Context Refs：{{ALLOWED_CONTEXT_IDS}}
+- 每个候选必须包含的 Context Refs：{{REQUIRED_CONTEXT_IDS}}
+- 已物化且可引用的 Data Closure Refs：{{ALLOWED_DATA_CLOSURE_IDS}}
+
+## 当前 RSU 映射
+
+{{CURRENT_RSU_TABLE}}
+
+## 当前 RSU 双列覆盖要求
+
+- 分别审查 `父级条件（原文）` 与 `原文内容`，不能只从后一列生成候选。
+- 父级是纯条件/触发/状态/范围时，把它用于限定相关候选，不单独造点。
+- 父级若含可独立观察行为，只能依据当前或支持 RSU 的 `原文内容` 生成；若输入中没有承载完整父级文字的 RSU，停止并报告上游映射缺口。
+- 每个候选的“推导依据”始终写 `原文内容：...`；父级非 `无` 时同时写 `父级条件：...`。
+
+## 支持 RSU 映射
+
+{{SUPPORTING_RSU_TABLE}}
+
+## 相关问题
+
+{{QUESTION_TABLES}}
+
+## 固定输入
+
+{{FIXED_MATERIALS}}
+
+## 动态输入
+
+{{DYNAMIC_MATERIALS}}
+
+## 追溯证据索引
+
+以下资源由已物化的 FC/DC 卡引用，用于来源追溯和变更检测，不自动展开正文，也不能直接作为候选的 `Context Refs`。若当前 RSU 的语义确实需要其中的原文细节，必须先在上游把该资源 ID 显式加入当前 RSU 的“相关上下文”，再重新准备输入。
+
+{{EVIDENCE_MATERIALS}}
+
+## 生成约束
+
+{{GENERATION_CONTRACT}}

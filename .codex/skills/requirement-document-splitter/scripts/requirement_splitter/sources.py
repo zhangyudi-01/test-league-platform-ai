@@ -58,9 +58,7 @@ def sha256_bytes(data: bytes) -> str:
 def normalize_title(value: str) -> str:
     value = value.replace("﻿", "").replace(" ", " ")
     value = re.sub(r"\\([_`*\[\]()#+.!-])", r"\1", value)
-    value = re.sub(r"[✅⭐]", "", value)
-    value = re.sub(r"[（(]\s*(?:十三|十二|十一|十|\d+)\s*[）)]", "", value)
-    value = re.sub(r"^\s*[（(]?(?:\d+|[一二三四五六七八九十百千万]+)[）).、．.\-]\s*", "", value)
+    value = re.sub(r"^\s*(?:\d+|[一二三四五六七八九十百千万]+)[）).、．.\-]\s*", "", value)
     value = re.sub(r"[（(]\s*(?:增|新增|改|修改|删|删除|原|旧|新)\s*[）)]", "", value)
     value = re.sub(r"\s+", " ", value)
     return value.strip()
