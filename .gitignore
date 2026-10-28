@@ -12,7 +12,9 @@ __pycache__/
 global/source-materials/database-docs/database.toml
 
 # API definitions are maintained in their own Git repository and pulled locally.
-global/source-materials/api-docs/
+# Keep local documents placed directly under api-docs in this AI repository.
+global/source-materials/api-docs/README.md
+global/source-materials/api-docs/league-core-api/
 
 # Local reports and temporary output
 report/
