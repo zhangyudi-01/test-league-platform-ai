@@ -1,0 +1,37 @@
+{
+  "schema_version": 2,
+  "source": "<源需求文档路径，支持 .md/.markdown/.docx>",
+  "source_format": "auto",
+  "modules_root": "<已确认模块目录根路径>",
+  "attachments_root": "",
+  "scope_headings": ["<需要拆分的起始章节标题；可多个>"],
+  "stop_headings": ["<拆分停止章节标题；可多个；没有则填空数组>"],
+  "run_dir": "",
+  "output_name": "00-module-requirement-pack.md",
+  "write_scope": "direct",
+  "module_dir_pattern": "^(?P<prefix>[A-Za-z]+)-(?P<id>\\d+(?:-\\d+)*)-(?P<title>.+)$",
+  "docx": {
+    "heading_style_map": {
+      "dingding-heading1": 1,
+      "dingding-heading2": 2,
+      "dingding-heading3": 3,
+      "dingding-heading4": 4,
+      "Heading1": 1,
+      "Heading2": 2,
+      "Heading3": 3,
+      "Heading4": 4,
+      "标题 1": 1,
+      "标题 2": 2,
+      "标题 3": 3,
+      "标题 4": 4
+    },
+    "ignore_toc": true,
+    "asset_dir_name": "assets",
+    "table_format": "markdown"
+  },
+  "agent": "none",
+  "agent_scope": "problems",
+  "agent_task": "review",
+  "claude_command": "",
+  "codex_command": ""
+}

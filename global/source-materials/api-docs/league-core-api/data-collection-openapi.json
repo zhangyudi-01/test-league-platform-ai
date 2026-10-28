@@ -1,0 +1,2466 @@
+{
+  "openapi" : "3.1.0",
+  "info" : {
+    "title" : "OpenAPI definition",
+    "version" : "v0"
+  },
+  "servers" : [ {
+    "url" : "http://localhost:8080",
+    "description" : "Generated server url"
+  } ],
+  "tags" : [ {
+    "name" : "sport-radar-collection-controller",
+    "description" : "SportRadar赔率采集Controller。"
+  }, {
+    "name" : "nami-ice-hockey-collection-controller",
+    "description" : "纳米冰球数据Controller"
+  }, {
+    "name" : "nami-football-collection-controller",
+    "description" : "纳米数据Controller"
+  }, {
+    "name" : "nami-basketball-collection-controller",
+    "description" : "纳米篮球数据Controller"
+  }, {
+    "name" : "nami-american-football-collection-controller",
+    "description" : "纳米橄榄球数据Controller"
+  }, {
+    "name" : "beitai-collection-controller",
+    "description" : "贝泰数据Controller"
+  }, {
+    "name" : "bd-collection-controller",
+    "description" : "北单数据抓取"
+  } ],
+  "paths" : {
+    "/sport_radar/prematch_odds/soccer/event/collect" : {
+      "post" : {
+        "tags" : [ "sport-radar-collection-controller" ],
+        "operationId" : "collectSoccerPrematchOddsByEvent",
+        "parameters" : [ {
+          "name" : "sportEventId",
+          "in" : "query",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/CommonResultObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/sport_radar/prematch_odds/soccer/daily/collect" : {
+      "post" : {
+        "tags" : [ "sport-radar-collection-controller" ],
+        "operationId" : "collectSoccerPrematchOddsByBeitaiMatches",
+        "parameters" : [ {
+          "name" : "date",
+          "in" : "query",
+          "required" : false,
+          "schema" : {
+            "type" : "string",
+            "format" : "date"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/CommonResultObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/sport_radar/prematch_odds/soccer/changelog/collect" : {
+      "post" : {
+        "tags" : [ "sport-radar-collection-controller" ],
+        "operationId" : "collectSoccerPrematchOddsChangelog",
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/CommonResultObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/tx/football/team/update-by-id" : {
+      "get" : {
+        "tags" : [ "tongxing-data-collection-controller" ],
+        "summary" : "同行球队详情信息增量更新.",
+        "description" : "同行球队详情信息增量更新.\n 通过redis中key获取当前最大startId访问同行getupdatelog接口循环获取更新日志(注：当key值不存在时，startId从1开始，一直更新到最新记录).\n 通过更新日志中的球队id循环访问getteaminfo获取需要更新的详细信息并保存至数据库tx_team表中(# 注：1、访问getteaminfo接口过程中对于未返回正确结果的数据认为为缺失数据，会在流程中记录并返回，仅保存有正确返回结果的数据；2.仅更新status字段).\n [流程图]（https://alidocs.dingtalk.com/i/nodes/9E05BDRVQG7x4vpYSG69BNBb863zgkYA?utm_scene=team_space&iframeQuery=anchorId%3Duu_m68ofzj9z6ilw9x2tc）\n 涉及redis字段 ：\n 1. hash类型 key:data-collection:tongxing_football_updateLog_startId field:team value:startId的值.\n ```yaml\n errorCode:\n - 31: 服务异常\n - 32: 服务调用失败\n - 2: 数据源数据获取失败 （# 同行数据异常，data里返回具体信息 例：{\"code\":2,\"message\":\"数据源数据获取失败\",\"data\":{\"collectionFailed\":[{\"id\":34,\"reason\":\"同行xx数据缺失:No Data\"}]}}）\n ```",
+        "operationId" : "txFootballTeamUpdate",
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/CommonResultObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/tx/football/team/init" : {
+      "get" : {
+        "tags" : [ "tongxing-data-collection-controller" ],
+        "summary" : "同行球队详情信息全量更新.",
+        "description" : "同行球队详情信息全量更新.\n 根据tx_match表获取所有的球队id循环访问同行getteaminfo接口更新球队详情信息.\n [流程图]（https://alidocs.dingtalk.com/i/nodes/9E05BDRVQG7x4vpYSG69BNBb863zgkYA?utm_scene=team_space&iframeQuery=anchorId%3Duu_m5uuy52qif961wabr0r）\n\n ```yaml\n errorCode:\n - 31: 服务异常\n - 32: 服务调用失败\n - 2: 数据源数据获取失败 （# 同行数据异常，data里返回具体信息 例：{\"code\":2,\"message\":\"数据源数据获取失败\",\"data\":{\"collectionFailed\":[{\"id\":34,\"reason\":\"同行xx数据缺失:No Data\"}]}}）\n ```",
+        "operationId" : "txFootballTeam",
+        "responses" : {
+          "200" : {
+            "description" : "@CommonResult<?> 更新结果",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/CommonResultObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/tx/football/stage" : {
+      "get" : {
+        "tags" : [ "tongxing-season-stage-controller" ],
+        "summary" : "增量更新阶段、比赛赛季、阶段关联信息.",
+        "description" : "增量更新阶段、比赛赛季、阶段关联信息.\n\n 1. 当前任务依赖同行赛季任务的抽取,需在赛季更新任务执行后开始执行.\n 2. 按照比赛的更新时间增量更新的.\n [详情参考](https://alidocs.dingtalk.com/i/nodes/X6GRezwJlLjmwElkcoKNAY2kJdqbropQ?utm_scene=team_space&iframeQuery=anchorId%3Duu_m7u3duym75itgzw69kg）\n\n ```yaml\n errorCode:\n - 31: 服务异常\n - 2: 比赛数据不存在\n ```",
+        "operationId" : "updateStage",
+        "responses" : {
+          "200" : {
+            "description" : "@CommonResult<?> 更新结果",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/CommonResultObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/tx/football/season" : {
+      "get" : {
+        "tags" : [ "tongxing-season-stage-controller" ],
+        "summary" : "增量更新同行赛赛季信息.",
+        "description" : "增量更新同行赛赛季信息.\n\n 1. 前任务依赖赛事信息的创建和更新.\n 2. 按照赛事的更新时间增量更新的.\n [详情参考](https://alidocs.dingtalk.com/i/nodes/X6GRezwJlLjmwElkcoKNAY2kJdqbropQ?utm_scene=team_space&iframeQuery=anchorId%3Duu_m7u3dylti98c059ll9k）\n\n ```yaml\n errorCode:\n - 31: 服务异常\n - 2: 赛事数据不存在\n ```",
+        "operationId" : "txFootballDatabase",
+        "responses" : {
+          "200" : {
+            "description" : "@CommonResult<?> 更新结果",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/CommonResultObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/tx/football/odds/incremental" : {
+      "get" : {
+        "tags" : [ "tongxing-data-collection-controller" ],
+        "summary" : "同行赔率增量采集接口。\n scope=live 处理进行中比赛，scope=week 处理未来7天待赛比赛。",
+        "description" : "同行赔率增量采集接口。\n scope=live 处理进行中比赛，scope=week 处理未来7天待赛比赛。",
+        "operationId" : "txFootballOddsIncremental",
+        "parameters" : [ {
+          "name" : "type",
+          "in" : "query",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "scope",
+          "in" : "query",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/CommonResultObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/tx/football/odds/europe/collect-by-date" : {
+      "get" : {
+        "tags" : [ "tongxing-data-collection-controller" ],
+        "summary" : "同行欧盘赔率临时采集接口.",
+        "description" : "同行欧盘赔率临时采集接口.",
+        "operationId" : "txFootballEuropeOddsCollectByDate",
+        "parameters" : [ {
+          "name" : "date",
+          "in" : "query",
+          "description" : "比赛日期，格式yyyy-MM-dd；不传默认当天.",
+          "required" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "limit",
+          "in" : "query",
+          "description" : "最多采集比赛数，默认1，最大20.",
+          "required" : false,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int32",
+            "default" : 1
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/CommonResultObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/tx/football/odds/europe-log/collect-by-date" : {
+      "get" : {
+        "tags" : [ "tongxing-data-collection-controller" ],
+        "summary" : "同行欧盘历史赔率临时采集接口.",
+        "description" : "同行欧盘历史赔率临时采集接口.",
+        "operationId" : "txFootballEuropeOddsLogCollectByDate",
+        "parameters" : [ {
+          "name" : "date",
+          "in" : "query",
+          "description" : "比赛日期，格式yyyy-MM-dd；不传默认当天.",
+          "required" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "limit",
+          "in" : "query",
+          "description" : "最多采集比赛数，默认1，最大20.",
+          "required" : false,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int32",
+            "default" : 1
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/CommonResultObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/tx/football/odds/collect-by-date-range" : {
+      "get" : {
+        "tags" : [ "tongxing-data-collection-controller" ],
+        "summary" : "同行赔率按日期范围全量采集接口.",
+        "description" : "同行赔率按日期范围全量采集接口.",
+        "operationId" : "txFootballOddsCollectByDateRange",
+        "parameters" : [ {
+          "name" : "startDate",
+          "in" : "query",
+          "description" : "比赛开始日期，格式yyyy-MM-dd.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "endDate",
+          "in" : "query",
+          "description" : "比赛结束日期，格式yyyy-MM-dd.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "oddsType",
+          "in" : "query",
+          "description" : "赔率类型：all / asia / europe / europe-log.",
+          "required" : false,
+          "schema" : {
+            "type" : "string",
+            "default" : "all"
+          }
+        }, {
+          "name" : "limit",
+          "in" : "query",
+          "description" : "最多采集比赛数；不传则采集日期范围内全部比赛.",
+          "required" : false,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int32"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/CommonResultObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/tx/football/odds/collect-by-date-range-background" : {
+      "get" : {
+        "tags" : [ "tongxing-data-collection-controller" ],
+        "summary" : "同行赔率按日期范围后台采集接口，一次只采集一个赔率类型.",
+        "description" : "同行赔率按日期范围后台采集接口，一次只采集一个赔率类型.",
+        "operationId" : "txFootballOddsCollectByDateRangeBackground",
+        "parameters" : [ {
+          "name" : "startDate",
+          "in" : "query",
+          "description" : "比赛开始日期，格式yyyy-MM-dd.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "endDate",
+          "in" : "query",
+          "description" : "比赛结束日期，格式yyyy-MM-dd.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "oddsType",
+          "in" : "query",
+          "description" : "赔率类型：asia / europe / europe-log.",
+          "required" : false,
+          "schema" : {
+            "type" : "string",
+            "default" : "asia"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/CommonResultObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/tx/football/odds/collect-by-competition" : {
+      "get" : {
+        "tags" : [ "tongxing-data-collection-controller" ],
+        "summary" : "同行赔率按赛事临时采集接口.",
+        "description" : "同行赔率按赛事临时采集接口.",
+        "operationId" : "txFootballOddsCollectByCompetition",
+        "parameters" : [ {
+          "name" : "competitionId",
+          "in" : "query",
+          "description" : "同行赛事ID.",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int32"
+          }
+        }, {
+          "name" : "oddsType",
+          "in" : "query",
+          "description" : "赔率类型：all / asia / europe / europe-log.",
+          "required" : false,
+          "schema" : {
+            "type" : "string",
+            "default" : "all"
+          }
+        }, {
+          "name" : "startDate",
+          "in" : "query",
+          "description" : "比赛开始日期，格式yyyy-MM-dd.",
+          "required" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "endDate",
+          "in" : "query",
+          "description" : "比赛结束日期，格式yyyy-MM-dd.",
+          "required" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "limit",
+          "in" : "query",
+          "description" : "最多采集比赛数；不传则采集该赛事当前赛季全部比赛.",
+          "required" : false,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int32"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/CommonResultObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/tx/football/odds/asia/collect-by-date" : {
+      "get" : {
+        "tags" : [ "tongxing-data-collection-controller" ],
+        "summary" : "同行亚盘赔率临时采集接口.",
+        "description" : "同行亚盘赔率临时采集接口.",
+        "operationId" : "txFootballAsiaOddsCollectByDate",
+        "parameters" : [ {
+          "name" : "date",
+          "in" : "query",
+          "description" : "比赛日期，格式yyyy-MM-dd；不传默认当天.",
+          "required" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "limit",
+          "in" : "query",
+          "description" : "最多采集比赛数，默认1，最大20.",
+          "required" : false,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int32",
+            "default" : 1
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/CommonResultObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/tx/football/odds/asia/collect-by-date-range-background" : {
+      "get" : {
+        "tags" : [ "tongxing-data-collection-controller" ],
+        "summary" : "同行亚盘按日期范围后台采集接口.",
+        "description" : "同行亚盘按日期范围后台采集接口.",
+        "operationId" : "txFootballAsiaOddsCollectByDateRangeBackground",
+        "parameters" : [ {
+          "name" : "startDate",
+          "in" : "query",
+          "description" : "比赛开始日期，格式yyyy-MM-dd.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "endDate",
+          "in" : "query",
+          "description" : "比赛结束日期，格式yyyy-MM-dd.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/CommonResultObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/tx/football/match/update-by-live" : {
+      "get" : {
+        "tags" : [ "tongxing-data-collection-controller" ],
+        "summary" : "同行比赛根据实时比分数据信息更新比赛信息.",
+        "description" : "同行比赛根据实时比分数据信息更新比赛信息.\n 通过访问同行getschedulebydate接口更新比赛信息（#注： 1.获取当前日期以及前后个1天的比赛,\n 2.仅处理r_basic_data表中存在的赛事id\n 3.仅处理getlivedata的比赛）.\n 通过批量解析 getschedulebydate 和 getlivedata 返回的数据，取出所有的赛事id，循环访问type=getcompetitionschedule接口，对于新增比赛用于补全数据的轮次信息.\n 通过比赛列表中的比赛id循环访问getgameinfo获取需要更新的详细信息并保存至数据库.\n [流程图]（https://alidocs.dingtalk.com/i/nodes/9E05BDRVQG7x4vpYSG69BNBb863zgkYA?utm_scene=team_space&iframeQuery=anchorId%3Duu_m6zt08tqbiepb2bbik7）\n\n ```yaml\n errorCode:\n - 31: 服务异常\n - 32: 服务调用失败\n - 2: 数据源数据获取失败 （# 同行数据异常，data里返回具体信息 例：{\"code\":2,\"message\":\"数据源数据获取失败\",\"data\":{\"collectionFailed\":[{\"id\":34,\"reason\":\"同行xx数据缺失:No Data\"}]}}）\n ```",
+        "operationId" : "txFootballMatchByLive",
+        "responses" : {
+          "200" : {
+            "description" : "@CommonResult<?> 更新结果",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/CommonResultObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/tx/football/match/update-by-id" : {
+      "get" : {
+        "tags" : [ "tongxing-data-collection-controller" ],
+        "summary" : "同行比赛列表信息增量更新（通过updateLoge更新）.",
+        "description" : "同行比赛列表信息增量更新（通过updateLoge更新）.\n 通过redis中key获取当前最大startId访问同行getupdatelog接口循环获取更新日志(#注：当key值不存在时，startId从1开始，一直更新到最新记录).\n 通过更新日志中的比赛id循环访问getgameinfo获取需要更新的详细信息.\n 通过批量解析 getgameInfo 返回的数据，取出所有的赛事id，循环访问type=getcompetitionschedule接口，对于新增比赛用于补全数据的轮次信息.\n getgameinfo中validGame为0的数据为已删除已数据，需要保存至tx_deleted表中，比赛更新信息保存至tx_match表中.\n 遍历rBasicData表中已存在的足球数据关系，将纳米当前赛季年、赛季起止时间据配置文件中时间更新至tx_competition表中.\n .\n\n [流程图]（https://alidocs.dingtalk.com/i/nodes/9E05BDRVQG7x4vpYSG69BNBb863zgkYA?utm_scene=team_space&iframeQuery=anchorId%3Duu_m68ofnv32ap0fdz9pvd）\n 涉及redis字段 ：\n 1. hash类型 key:data-collection:tongxing_football_updateLog_startId field:match value:startId的值.\n\n ```yaml\n errorCode:\n - 31: 服务异常\n - 32: 服务调用失败\n - 2: 数据源数据获取失败 （# 同行数据异常，data里返回具体信息 例：{\"code\":2,\"message\":\"数据源数据获取失败\",\"data\":{\"collectionFailed\":[{\"id\":34,\"reason\":\"同行xx数据缺失:No Data\"}]}}）\n ```",
+        "operationId" : "txFootballMatchUpdate",
+        "responses" : {
+          "200" : {
+            "description" : "@CommonResult<?> 更新结果",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/CommonResultObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/tx/football/match/update-by-date" : {
+      "get" : {
+        "tags" : [ "tongxing-data-collection-controller" ],
+        "summary" : "同行比赛根据日期更新比赛信息（通过日期更新）.",
+        "description" : "同行比赛根据日期更新比赛信息（通过日期更新）.\n 通过配置中的日期范围（tongxing-match-date-span）访问同行getschedulebydate接口更新比赛信息（#注： 1.tongxing-match-date-span同行比赛根据日期范围获取数据配置，|分隔符前面为当前时间的前n天，后面为当前时间后的n天,\n 2.仅处理r_basic_data表中存在的赛事id）.\n 通过批量解析 getschedulebydate 返回的数据，取出所有的赛事id，循环访问type=getcompetitionschedule接口，对于新增比赛用于补全数据的轮次信息.\n 通过比赛列表中的比赛id循环访问getgameinfo获取需要更新的详细信息并保存至数据库.\n [流程图]（https://alidocs.dingtalk.com/i/nodes/9E05BDRVQG7x4vpYSG69BNBb863zgkYA?utm_scene=team_space&iframeQuery=anchorId%3Duu_m6zt08tqbiepb2bbik7）\n\n ```yaml\n errorCode:\n - 31: 服务异常\n - 32: 服务调用失败\n - 2: 数据源数据获取失败 （# 同行数据异常，data里返回具体信息 例：{\"code\":2,\"message\":\"数据源数据获取失败\",\"data\":{\"collectionFailed\":[{\"id\":34,\"reason\":\"同行xx数据缺失:No Data\"}]}}）\n ```",
+        "operationId" : "txFootballMatchByDate",
+        "responses" : {
+          "200" : {
+            "description" : "@CommonResult<?> 更新结果",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/CommonResultObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/tx/football/match/init" : {
+      "get" : {
+        "tags" : [ "tongxing-data-collection-controller" ],
+        "summary" : "同行比赛详情信息全量更新.",
+        "description" : "同行比赛详情信息全量更新.\n 判断入参 startTime 和 endTime 是否有值，判断是否有值，有值则根据时间范围获取tx_match表中比赛id，无值则获取tx_match表中所有比赛id.\n 根据比赛id循环访问同行getgameinfo接口更新比赛详情信息.\n [流程图]（https://alidocs.dingtalk.com/i/nodes/9E05BDRVQG7x4vpYSG69BNBb863zgkYA?utm_scene=team_space&iframeQuery=anchorId%3Duu_m5z1tn8w2qfa9ygbfdu）\n\n ```yaml\n errorCode:\n - 31: 服务异常\n - 32: 服务调用失败\n - 2: 数据源数据获取失败 （# 同行数据异常，data里返回具体信息 例：{\"code\":2,\"message\":\"数据源数据获取失败\",\"data\":{\"collectionFailed\":[{\"id\":34,\"reason\":\"同行xx数据缺失:No Data\"}]}}）\n ```",
+        "operationId" : "txFootballMatchById",
+        "parameters" : [ {
+          "name" : "startTime",
+          "in" : "query",
+          "description" : "开始时间 临时入参",
+          "required" : false,
+          "schema" : {
+            "type" : "string",
+            "format" : "date-time"
+          }
+        }, {
+          "name" : "EndTime",
+          "in" : "query",
+          "description" : "结束时间 临时入参",
+          "required" : false,
+          "schema" : {
+            "type" : "string",
+            "format" : "date-time"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "@CommonResult<?> 更新结果",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/CommonResultObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/tx/football/match-list/init" : {
+      "get" : {
+        "tags" : [ "tongxing-data-collection-controller" ],
+        "summary" : "同行比赛列表信息全量更新.",
+        "description" : "同行比赛列表信息全量更新.\n 根据tx_competition表获取所有的赛事id循环访问同行getcompetitionschedule接口更新比赛列表信息.\n [流程图]（https://alidocs.dingtalk.com/i/nodes/9E05BDRVQG7x4vpYSG69BNBb863zgkYA?utm_scene=team_space&iframeQuery=anchorId%3Duu_m5uua3mgjjbq6sfoza）\n\n ```yaml\n errorCode:\n - 31: 服务异常\n - 32: 服务调用失败\n - 2: 数据源数据获取失败 （# 同行数据异常，data里返回具体信息 例：{\"code\":2,\"message\":\"数据源数据获取失败\",\"data\":{\"collectionFailed\":[{\"id\":34,\"reason\":\"同行xx数据缺失:No Data\"}]}}）\n ```",
+        "operationId" : "txFootballMatch",
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/CommonResultObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/tx/football/competition/update-by-id" : {
+      "get" : {
+        "tags" : [ "tongxing-data-collection-controller" ],
+        "summary" : "同行赛事详情信息增量更新.",
+        "description" : "同行赛事详情信息增量更新.\n 访问同行type=getcompetitionlist接口获取资料库首页信息.\n 通过redis中key获取当前最大startId访问同行getupdatelog接口循环获取更新日志(注：当key值不存在时，startId从1开始，一直更新到最新记录).\n 通过更新日志中的赛事id循环访问getcompetitioninfo获取需要更新的详细信息并批量保存至数据库tx_competition表中(# 注：1、对于据缺失的洲、国家信息由资料库首页中补全后保存至数据库。2、访问getcompetitioninfo接口过程中对于未返回正确结果的数据认为为缺失数据，会在流程中记录并返回，仅保存有正确返回结果的数据。).\n 同时基于已存在的赛事数据关系(r_basic_data表)，更新同行赛事的赛季年和赛季起止时间信息；赛季信息来源于纳米数据，通过获取纳米当前赛季信息并结合配置文件中的时间跨度来计算起止时间；数据保存至tx_competition表中，用于保持赛事信息的时效性；同时处理已删除的赛事和赛季数据，避免使用过期信息；\n [流程图]（https://alidocs.dingtalk.com/i/nodes/9E05BDRVQG7x4vpYSG69BNBb863zgkYA?utm_scene=team_space&iframeQuery=anchorId%3Duu_m68ntsnnojyu1xm0omj）\n\n 涉及redis字段 ：\n 1. hash类型 key:data-collection:tongxing_football_updateLog_startId field:competition value:startId的值.\n\n ```yaml\n errorCode:\n - 31: 服务异常\n - 32: 服务调用失败\n - 2: 数据源数据获取失败 （# 同行数据异常，data里返回具体信息 例：{\"code\":2,\"message\":\"数据源数据获取失败\",\"data\":{\"collectionFailed\":[{\"id\":34,\"reason\":\"同行xx数据缺失:No Data\"}]}}）\n ```",
+        "operationId" : "txFootballCompetitionUpdate",
+        "responses" : {
+          "200" : {
+            "description" : "@CommonResult<?> 更新结果",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/CommonResultObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/tx/football/competition/init" : {
+      "get" : {
+        "tags" : [ "tongxing-data-collection-controller" ],
+        "summary" : "同行赛事详情信息全量更新.",
+        "description" : "同行赛事详情信息全量更新.\n 根据tx_competition表获取所有的赛事id循环访问同行getcompetitioninfo接口更新赛事信息.\n [流程图]（https://alidocs.dingtalk.com/i/nodes/9E05BDRVQG7x4vpYSG69BNBb863zgkYA?utm_scene=team_space&iframeQuery=anchorId%3Duu_m5uuyi9dra5dqtd002f）\n\n ```yaml\n errorCode:\n - 31: 服务异常\n - 32: 服务调用失败\n - 2: 数据源数据获取失败 （# 同行数据异常，data里返回具体信息 例：{\"code\":2,\"message\":\"数据源数据获取失败\",\"data\":{\"collectionFailed\":[{\"id\":34,\"reason\":\"同行xx数据缺失:No Data\"}]}}）\n ```",
+        "operationId" : "txFootballCompetition",
+        "responses" : {
+          "200" : {
+            "description" : "@CommonResult<?> 更新结果",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/CommonResultObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/tx/football/competition-list/init" : {
+      "get" : {
+        "tags" : [ "tongxing-data-collection-controller" ],
+        "summary" : "同行资料库信息全量更新.",
+        "description" : "同行资料库信息全量更新.\n 根据同行getcompetitionlist接口更新数据，并保存至数据库tx_competition表中（注：仅更新当前赛季的最新信息）.\n 该接口对于赛事信息仅保存赛事名称，赛事类型，当前赛季信息，其他信息由tx/football/competition/init接口更新.\n [流程图]（https://alidocs.dingtalk.com/i/nodes/9E05BDRVQG7x4vpYSG69BNBb863zgkYA?utm_scene=team_space&iframeQuery=anchorId%3Duu_m564jceo4a9kytwd2lf）\n\n ```yaml\n errorCode:\n - 31: 服务异常\n - 32: 服务调用失败\n - 2: 数据源数据获取失败\n ```",
+        "operationId" : "txFootballDatabase_1",
+        "responses" : {
+          "200" : {
+            "description" : "@CommonResult<?> 更新结果",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/CommonResultObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/nami/ice-hockey/venue/update" : {
+      "get" : {
+        "tags" : [ "nami-ice-hockey-collection-controller" ],
+        "summary" : "纳米-冰球-场馆信息增量更新.",
+        "description" : "纳米-冰球-场馆信息增量更新.\n 根据key:data-collection:nami_ice_hockey_venue_timespan中的时间戳获取增量数据，并保存至数据库.\n 更新完成后将更新的时间戳保存至redis中.\n 涉及redis字段 ：\n 1. string类型 key:data-collection:nami_ice_hockey_venue_timespan value:时间戳.\n ```yaml\n errorCode:\n - 31: 服务异常\n - 32: 服务调用失\n - 9999: 未知错误 # 纳米数据源状态码\n - 2: 请先初始化数据，再执行增量更新\n ```",
+        "operationId" : "namiIceHockeyVenueUpdate",
+        "responses" : {
+          "200" : {
+            "description" : "@CommonResult<?> 初始化结果",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/CommonResultObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/nami/ice-hockey/venue/init" : {
+      "get" : {
+        "tags" : [ "nami-ice-hockey-collection-controller" ],
+        "summary" : "纳米-冰球-场馆信息初始化.",
+        "description" : "纳米-冰球-场馆信息初始化.\n 首次获取数据时，对场馆信息进行全量更新保存至数据库.\n 更新完成后将更新的时间戳保存至redis中.\n 涉及redis字段 ：\n 1. string类型 key:data-collection:nami_ice_hockey_venue_timespan value:时间戳.\n ```yaml\n errorCode:\n - 31: 服务异常\n - 32: 服务调用失败\n - 9999: 未知错误 # 纳米数据源状态码\n ```",
+        "operationId" : "namiIceHockeyVenueInit",
+        "responses" : {
+          "200" : {
+            "description" : "@CommonResult<?> 初始化结果",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/CommonResultObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/nami/ice-hockey/team/update" : {
+      "get" : {
+        "tags" : [ "nami-ice-hockey-collection-controller" ],
+        "summary" : "纳米-冰球-球队信息增量更新.",
+        "description" : "纳米-冰球-球队信息增量更新.\n 根据key:data-collection:nami_ice_hockey_team_timespan中的时间戳获取增量数据，并保存至数据库.\n 更新完成后将更新的时间戳保存至redis中.\n 涉及redis字段 ：\n 1. string类型 key:data-collection:nami_ice_hockey_team_timespan value:时间戳.\n ```yaml\n errorCode:\n - 31: 服务异常\n - 32: 服务调用失败\n - 9999: 未知错误 # 纳米数据源状态码\n - 2: 请先初始化数据，再执行增量更新\n ```",
+        "operationId" : "namiIceHockeyTeamUpdate",
+        "responses" : {
+          "200" : {
+            "description" : "@CommonResult<?> 初始化结果",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/CommonResultObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/nami/ice-hockey/team/init" : {
+      "get" : {
+        "tags" : [ "nami-ice-hockey-collection-controller" ],
+        "summary" : "纳米-冰球-球队信息初始化.",
+        "description" : "纳米-冰球-球队信息初始化.\n 首次获取数据时，对球队信息进行全量更新保存至数据库.\n 更新完成后将更新的时间戳保存至redis中.\n 涉及redis字段 ：\n 1. string类型 key:data-collection:nami_ice_hockey_team_timespan value:时间戳.\n ```yaml\n errorCode:\n - 31: 服务异常\n - 32: 服务调用失败\n - 9999: 未知错误 # 纳米数据源状态码\n ```",
+        "operationId" : "namiIceHockeyTeamInit",
+        "responses" : {
+          "200" : {
+            "description" : "@CommonResult<?> 初始化结果",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/CommonResultObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/nami/ice-hockey/stage/update" : {
+      "get" : {
+        "tags" : [ "nami-ice-hockey-collection-controller" ],
+        "summary" : "纳米-冰球-阶段信息增量更新.",
+        "description" : "纳米-冰球-阶段信息增量更新.\n 根据key:data-collection:nami_ice_hockey_stage_timespan中的时间戳获取增量数据，并保存至数据库.\n 更新完成后将更新的时间戳保存至redis中.\n 涉及redis字段 ：\n 1. string类型 key:data-collection:nami_ice_hockey_stage_timespan value:时间戳.\n ```yaml\n errorCode:\n - 31: 服务异常\n - 32: 服务调用失败\n - 9999: 未知错误 # 纳米数据源状态码\n - 2: 请先初始化数据，再执行增量更新\n ```",
+        "operationId" : "namiIceHockeyStageUpdate",
+        "responses" : {
+          "200" : {
+            "description" : "@CommonResult<?> 初始化结果",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/CommonResultObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/nami/ice-hockey/stage/init" : {
+      "get" : {
+        "tags" : [ "nami-ice-hockey-collection-controller" ],
+        "summary" : "纳米-冰球-阶段信息初始化.",
+        "description" : "纳米-冰球-阶段信息初始化.\n 首次获取数据时，对阶段信息进行全量更新保存至数据库.\n 更新完成后将更新的时间戳保存至redis中.\n 涉及redis字段 ：\n 1. string类型 key:data-collection:nami_ice_hockey_stage_timespan value:时间戳.\n ```yaml\n errorCode:\n - 31: 服务异常\n - 32: 服务调用失败\n - 9999: 未知错误 # 纳米数据源状态码\n ```",
+        "operationId" : "namiIceHockeyStageInit",
+        "responses" : {
+          "200" : {
+            "description" : "@CommonResult<?> 初始化结果",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/CommonResultObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/nami/ice-hockey/season/update" : {
+      "get" : {
+        "tags" : [ "nami-ice-hockey-collection-controller" ],
+        "summary" : "纳米-冰球-赛季信息增量更新.",
+        "description" : "纳米-冰球-赛季信息增量更新.\n 根据key:data-collection:nami_ice_hockey_season_timespan中的时间戳获取增量数据，并保存至数据库.\n 更新完成后将更新的时间戳保存至redis中.\n 涉及redis字段 ：\n 1. string类型 key:data-collection:nami_ice_hockey_season_timespan value:时间戳.\n ```yaml\n errorCode:\n - 31: 服务异常\n - 32: 服务调用失败\n - 9999: 未知错误 # 纳米数据源状态码\n - 2: 请先初始化数据，再执行增量更新\n ```",
+        "operationId" : "namiIceHockeySeasonUpdate",
+        "responses" : {
+          "200" : {
+            "description" : "@CommonResult<?> 初始化结果",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/CommonResultObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/nami/ice-hockey/season/init" : {
+      "get" : {
+        "tags" : [ "nami-ice-hockey-collection-controller" ],
+        "summary" : "纳米-冰球-赛季信息初始化.",
+        "description" : "纳米-冰球-赛季信息初始化.\n 首次获取数据时，对赛季信息进行全量更新保存至数据库.\n 更新完成后将更新的时间戳保存至redis中.\n 涉及redis字段 ：\n 1. string类型 key:data-collection:nami_ice_hockey_season_timespan value:时间戳.\n\n ```yaml\n errorCode:\n - 31: 服务异常\n - 32: 服务调用失败\n - 9999: 未知错误 # 纳米数据源状态码\n ```",
+        "operationId" : "namiIceHockeySeasonInit",
+        "responses" : {
+          "200" : {
+            "description" : "@CommonResult<?> 初始化结果",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/CommonResultObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/nami/ice-hockey/match/update" : {
+      "get" : {
+        "tags" : [ "nami-ice-hockey-collection-controller" ],
+        "summary" : "纳米-冰球-比赛信息增量更新.",
+        "description" : "纳米-冰球-比赛信息增量更新.\n 根据key:data-collection:nami_ice_hockey_match_timespan中的时间戳获取增量数据，并保存至数据库.\n 更新完成后将更新的时间戳保存至redis中.\n 涉及redis字段 ：\n 1. string类型 key:data-collection:nami_ice_hockey_match_timespan value:时间戳.\n ```yaml\n errorCode:\n - 31: 服务异常\n - 32: 服务调用失败\n - 9999: 未知错误 # 纳米数据源状态码\n - 2: 请先初始化数据，再执行增量更新\n ```",
+        "operationId" : "namiIceHockeyMatchUpdate",
+        "responses" : {
+          "200" : {
+            "description" : "@CommonResult<?> 初始化结果",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/CommonResultObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/nami/ice-hockey/match/init" : {
+      "get" : {
+        "tags" : [ "nami-ice-hockey-collection-controller" ],
+        "summary" : "纳米-冰球-比赛信息初始化.",
+        "description" : "纳米-冰球-比赛信息初始化.\n 首次获取数据时，对比赛信息进行全量更新保存至数据库.\n 更新完成后将更新的时间戳保存至redis中.\n 涉及redis字段 ：\n 1. string类型 key:data-collection:nami_ice_hockey_match_timespan value:时间戳.\n ```yaml\n errorCode:\n - 31: 服务异常\n - 32: 服务调用失败\n - 9999: 未知错误 # 纳米数据源状态码\n ```",
+        "operationId" : "namiIceHockeyMatchInit",
+        "responses" : {
+          "200" : {
+            "description" : "@CommonResult<?> 初始化结果",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/CommonResultObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/nami/ice-hockey/deleted" : {
+      "get" : {
+        "tags" : [ "nami-ice-hockey-collection-controller" ],
+        "summary" : "纳米-冰球-获取删除数据.",
+        "description" : "纳米-冰球-获取删除数据.\n 访问/ice_hockey/deleted接口获取24小时内删除的数据id.\n 将删除数据更新至nami_ice_hockey_deleted表中.\n [流程图]（https://alidocs.dingtalk.com/i/nodes/9E05BDRVQG7x4vpYSG69BNBb863zgkYA?utm_scene=team_space&iframeQuery=anchorId%3Duu_m71bdfi0tj6gqv1ll79）\n ```yaml\n errorCode:\n - 31: 服务异常\n - 32: 服务调用失败\n - 9999: 未知错误 # 纳米数据源状态码",
+        "operationId" : "namiIceHockeyDeleted",
+        "responses" : {
+          "200" : {
+            "description" : "@CommonResult<?>",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/CommonResultObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/nami/ice-hockey/country/init" : {
+      "get" : {
+        "tags" : [ "nami-ice-hockey-collection-controller" ],
+        "summary" : "纳米-冰球-国家信息初始化.",
+        "description" : "纳米-冰球-国家信息初始化.\n 首次获取数据时，对国家信息进行全量更新保存至数据库\n ```yaml\n errorCode:\n - 31: 服务异常\n - 32: 服务调用失败\n - 9999: 未知错误 # 纳米数据源状态码\n ```",
+        "operationId" : "namiIceHockeyCountryInit",
+        "responses" : {
+          "200" : {
+            "description" : "@CommonResult<?> 初始化结果",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/CommonResultObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/nami/ice-hockey/competition/update" : {
+      "get" : {
+        "tags" : [ "nami-ice-hockey-collection-controller" ],
+        "summary" : "纳米-冰球-赛事信息增量更新.",
+        "description" : "纳米-冰球-赛事信息增量更新.\n 根据key:data-collection:nami_ice_hockey_competition_timespan中的时间戳获取增量数据，并保存至数据库.\n 更新完成后将更新的时间戳保存至redis中.\n 涉及redis字段 ：\n 1. string类型 key:data-collection:nami_ice_hockey_competition_timespan value:时间戳.\n ```yaml\n errorCode:\n - 31: 服务异常\n - 32: 服务调用失败\n - 9999: 未知错误 # 纳米数据源状态码\n - 2: 请先初始化数据，再执行增量更新\n ```",
+        "operationId" : "namiIceHockeyCompetitionUpdate",
+        "responses" : {
+          "200" : {
+            "description" : "@CommonResult<?> 初始化结果",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/CommonResultObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/nami/ice-hockey/competition/init" : {
+      "get" : {
+        "tags" : [ "nami-ice-hockey-collection-controller" ],
+        "summary" : "纳米-冰球-赛事信息初始化.",
+        "description" : "纳米-冰球-赛事信息初始化.\n 首次获取数据时，对赛事信息进行全量更新保存至数据库.\n 更新完成后将更新的时间戳保存至redis中.\n 涉及redis字段 ：\n 1. string类型 key:data-collection:nami_ice_hockey_competition_timespan value:时间戳.\n ```yaml\n errorCode:\n - 31: 服务异常\n - 32: 服务调用失败\n - 9999: 未知错误 # 纳米数据源状态码\n ```",
+        "operationId" : "namiIceHockeyCompetitionInit",
+        "responses" : {
+          "200" : {
+            "description" : "@CommonResult<?> 初始化结果",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/CommonResultObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/nami/ice-hockey/category/init" : {
+      "get" : {
+        "tags" : [ "nami-ice-hockey-collection-controller" ],
+        "summary" : "纳米-冰球-分类(洲际)信息初始化.",
+        "description" : "纳米-冰球-分类(洲际)信息初始化.\n 首次获取数据时，对分类(洲际)信息进行全量更新保存至数据库\n ```yaml\n errorCode:\n - 31: 服务异常\n - 32: 服务调用失\n - 9999: 未知错误 # 纳米数据源状态码\n ```",
+        "operationId" : "namiIceHockeyCategoryInit",
+        "responses" : {
+          "200" : {
+            "description" : "@CommonResult<?> 初始化结果",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/CommonResultObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/nami/football/venue/update" : {
+      "get" : {
+        "tags" : [ "nami-football-collection-controller" ],
+        "summary" : "纳米-足球-场馆信息增量更新.",
+        "description" : "纳米-足球-场馆信息增量更新.\n 根据key:data-collection:nami_football_venue_timespan中的时间戳获取增量数据，并保存至数据库.\n 更新完成后将更新的时间戳,原数据保存至redis中.\n 涉及redis字段 ：\n 1. string类型 key:data-collection:nami_football_venue_timespan value:时间戳.\n 2. hash类型 key:data-collection:nami_football_venue_data field:时间戳 value:此次更新的数据内容.\n ```yaml\n errorCode:\n - 31: 服务异常\n - 32: 服务调用失\n - 9999: 未知错误 # 纳米数据源状态码\n - 2: 请先初始化数据，再执行增量更新\n ```",
+        "operationId" : "namiFootballVenue",
+        "responses" : {
+          "200" : {
+            "description" : "@CommonResult<?> 初始化结果",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/CommonResultObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/nami/football/venue/init" : {
+      "get" : {
+        "tags" : [ "nami-football-collection-controller" ],
+        "summary" : "纳米-足球-场馆信息初始化.",
+        "description" : "纳米-足球-场馆信息初始化.\n 首次获取数据时，对场馆信息进行全量更新保存至数据库.\n 更新完成后将更新的时间戳,原数据保存至redis中.\n 涉及redis字段 ：\n 1. string类型 key:data-collection:nami_football_venue_timespan value:时间戳.\n 2. hash类型 key:data-collection:nami_football_venue_data field:时间戳 value:此次更新的数据内容.\n ```yaml\n errorCode:\n - 31: 服务异常\n - 32: 服务调用失败\n - 9999: 未知错误 # 纳米数据源状态码\n ```",
+        "operationId" : "namiFootballVenueInit",
+        "responses" : {
+          "200" : {
+            "description" : "@CommonResult<?> 初始化结果",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/CommonResultObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/nami/football/team/update" : {
+      "get" : {
+        "tags" : [ "nami-football-collection-controller" ],
+        "summary" : "纳米-足球-球队信息增量更新.",
+        "description" : "纳米-足球-球队信息增量更新.\n 根据key:data-collection:nami_football_team_timespan中的时间戳获取增量数据，并保存至数据库.\n 更完成后将更新的时间戳,原数据保存至redis中.\n 涉及redis字段 ：\n 1. string类型 key:data-collection:nami_football_team_timespan value:时间戳.\n 2. hash类型 key:data-collection:nami_football_team_data field:时间戳 value:此次更新的数据内容.\n ```yaml\n errorCode:\n - 31: 服务异常\n - 32: 服务调用失败\n - 9999: 未知错误 # 纳米数据源状态码\n - 2: 请先初始化数据，再执行增量更新\n ```",
+        "operationId" : "namiFootballTeam",
+        "responses" : {
+          "200" : {
+            "description" : "@CommonResult<?> 初始化结果",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/CommonResultObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/nami/football/team/init" : {
+      "get" : {
+        "tags" : [ "nami-football-collection-controller" ],
+        "summary" : "纳米-足球-球队信息初始化.",
+        "description" : "纳米-足球-球队信息初始化.\n 首次获取数据时，对球队信息进行全量更新保存至数据库.\n 更新完成后将更新的时间戳,原数据保存至redis中.\n 涉及redis字段 ：\n 1. string类型 key:data-collection:nami_football_team_timespan value:时间戳.\n 2. hash类型 key:data-collection:nami_football_team_data field:时间戳 value:此次更新的数据内容.\n ```yaml\n errorCode:\n - 31: 服务异常\n - 32: 服务调用失败\n - 9999: 未知错误 # 纳米数据源状态码\n ```",
+        "operationId" : "namiFootballTeamInit",
+        "responses" : {
+          "200" : {
+            "description" : "@CommonResult<?> 初始化结果",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/CommonResultObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/nami/football/standings" : {
+      "get" : {
+        "tags" : [ "nami-football-collection-controller" ],
+        "summary" : "纳米-足球-积分榜快照采集.",
+        "description" : "纳米-足球-积分榜快照采集.\n 查询已标准化赛事，循环获取积分榜数据，按 SHA-256 整体快照对比入库 nami_football_standing_snapshot 表.\n 单赛事失败跳过，不影响其余；同 hash 不重复插入.",
+        "operationId" : "namiFootballStandings",
+        "responses" : {
+          "200" : {
+            "description" : "CommonResult<?> 采集结果",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/CommonResultObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/nami/football/stage/update" : {
+      "get" : {
+        "tags" : [ "nami-football-collection-controller" ],
+        "summary" : "纳米-足球-阶段信息增量更新.",
+        "description" : "纳米-足球-阶段信息增量更新.\n 根据key:data-collection:nami_football_stage_timespan中的时间戳获取增量数据，并保存至数据库.\n 更新完成后将更新的时间戳,原数据保存至redis中.\n 涉及redis字段 ：\n 1. string类型 key:data-collection:nami_football_stage_timespan value:时间戳.\n 2. hash类型 key:data-collection:nami_football_stage_data field:时间戳 value:此次更新的数据内容.\n ```yaml\n errorCode:\n - 31: 服务异常\n - 32: 服务调用失败\n - 9999: 未知错误 # 纳米数据源状态码\n - 2: 请先初始化数据，再执行增量更新\n ```",
+        "operationId" : "namiFootballStage",
+        "responses" : {
+          "200" : {
+            "description" : "@CommonResult<?> 初始化结果",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/CommonResultObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/nami/football/stage/init" : {
+      "get" : {
+        "tags" : [ "nami-football-collection-controller" ],
+        "summary" : "纳米-足球-阶段信息初始化.",
+        "description" : "纳米-足球-阶段信息初始化.\n 首次获取数据时，对阶段信息进行全量更新保存至数据库.\n 更新完成后将更新的时间戳,原数据保存至redis中.\n 涉及redis字段 ：\n 1. string类型 key:data-collection:nami_football_stage_timespan value:时间戳.\n 2. hash类型 key:data-collection:nami_football_stage_data field:时间戳 value:此次更新的数据内容.\n ```yaml\n errorCode:\n - 31: 服务异常\n - 32: 服务调用失败\n - 9999: 未知错误 # 纳米数据源状态码\n ```",
+        "operationId" : "namiFootballStageInit",
+        "responses" : {
+          "200" : {
+            "description" : "@CommonResult<?> 初始化结果",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/CommonResultObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/nami/football/season/update" : {
+      "get" : {
+        "tags" : [ "nami-football-collection-controller" ],
+        "summary" : "纳米-足球-赛季信息增量更新.",
+        "description" : "纳米-足球-赛季信息增量更新.\n 根据key:data-collection:nami_football_season_timespan中的时间戳获取增量数据，并保存至数据库.\n 更新完成后将更新的时间戳,原数据保存至redis中.\n 涉及redis字段 ：\n 1. string类型 key:data-collection:nami_football_season_timespan value:时间戳.\n 2. hash类型 key:data-collection:nami_football_season_data field:时间戳 value:此次更新的数据内容.\n ```yaml\n errorCode:\n - 31: 服务异常\n - 32: 服务调用失败\n - 9999: 未知错误 # 纳米数据源状态码\n - 2: 请先初始化数据，再执行增量更新\n ```",
+        "operationId" : "namiFootballSeason",
+        "responses" : {
+          "200" : {
+            "description" : "@CommonResult<?> 初始化结果",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/CommonResultObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/nami/football/season/init" : {
+      "get" : {
+        "tags" : [ "nami-football-collection-controller" ],
+        "summary" : "纳米-足球-赛季信息初始化.",
+        "description" : "纳米-足球-赛季信息初始化.\n 首次获取数据时，对赛季信息进行全量更新保存至数据库.\n 更新完成后将更新的时间戳,原数据保存至redis中.\n 涉及redis字段 ：\n 1. string类型 key:data-collection:nami_football_season_timespan value:时间戳.\n 2. hash类型 key:data-collection:nami_football_season_data field:时间戳 value:此次更新的数据内容.\n\n ```yaml\n errorCode:\n - 31: 服务异常\n - 32: 服务调用失败\n - 9999: 未知错误 # 纳米数据源状态码\n ```",
+        "operationId" : "namiFootballSeasonInit",
+        "responses" : {
+          "200" : {
+            "description" : "@CommonResult<?> 初始化结果",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/CommonResultObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/nami/football/odds/update" : {
+      "get" : {
+        "tags" : [ "nami-football-collection-controller" ],
+        "summary" : "纳米-足球-纳米比赛实时指数数据更新.",
+        "description" : "纳米-足球-纳米比赛实时指数数据更新.\n 查询r_basic_data表中source_type为1的所有纳米赛事id作为指定赛事id\n 访问纳米“获取实时比赛指数数据/football/odds/live”接口获取赔率变动信息(#注：1、只处理亚盘信息;\n     2、当前只处赛前赔率信息，只处理比赛状态为未开始1的赔率数据;\n     3、对应nami_football_match中不存在的比赛信息不做处理;\n     4、比赛信息不在指定纳米赛事id范围内的比赛不做处理;).\n 保存数据至nami_football_odds表.\n [流程图]（https://alidocs.dingtalk.com/i/nodes/9E05BDRVQG7x4vpYSG69BNBb863zgkYA?utm_scene=team_space&iframeQuery=anchorId%3Duu_m83wb8c988lelvoyk5q）\n ```yaml\n errorCode:\n - 31: 服务异常\n - 32: 服务调用失败\n - 9999: 未知错误 # 纳米数据源状态码",
+        "operationId" : "namiFootballOddsUpdate",
+        "responses" : {
+          "200" : {
+            "description" : "@CommonResult<?>",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/CommonResultObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/nami/football/odds-repair/update" : {
+      "get" : {
+        "tags" : [ "nami-football-collection-controller" ],
+        "summary" : "纳米-足球-纳米比赛指数数据修复更新.",
+        "description" : "纳米-足球-纳米比赛指数数据修复更新.\n 查询r_basic_data表中source_type为1的所有纳米赛事id作为指定赛事id.\n 访问纳米“获取指数更新数据/football/odds/update”接口获取60秒内指数有更新修复的全量比赛以及关联的指数公司与更新时间数据(#注：通过nami_football_match表过滤出属于指定赛事id下且库中存在的比赛id列表match_id_list).\n 循环根据match_id_list访问纳米“获取单场比赛指数数据/football/odds/history”接口获取单场比赛佩赔率信息,将对应公司id，比赛id，修复时间的赔率信息(#注：1、只处理亚盘信息\n 2、当前只处赛前赔率信息，只处理比赛状态为未开始1的赔率数据\n 3、若根据条件查询不到对应信息，则认为纳米删除了该数据，则数据库也会同步删除).\n 将更新前的数据作为历史数据保存至redis中.\n 根据比赛id删除原有数据，在进行保存操作, 保存数据至nami_football_odds表.\n [流程图]（https://alidocs.dingtalk.com/i/nodes/9E05BDRVQG7x4vpYSG69BNBb863zgkYA?utm_scene=team_space&iframeQuery=anchorId%3Duu_m83x1w37pj1mxg2nzl8）\n 涉及redis字段 ：\n 1. hash类型 key:data-collection:nami_football_odds_change field:matchId-公司id-更新修复时间 value:历史数据. (#注：更新修复时间为“获取指数更新数据”接口返回，field例：411101-20-1741671720，前为比赛id，后为时间)\n\n ```yaml\n errorCode:\n - 31: 服务异常\n - 32: 服务调用失败\n - 9999: 未知错误 # 纳米数据源状态码",
+        "operationId" : "namiFootballOddsRepairUpdate",
+        "responses" : {
+          "200" : {
+            "description" : "@CommonResult<?>",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/CommonResultObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/nami/football/odds-history/init" : {
+      "get" : {
+        "tags" : [ "nami-football-collection-controller" ],
+        "summary" : "纳米-足球-纳米比赛单场比赛指数数据历史初始化.",
+        "description" : "纳米-足球-纳米比赛单场比赛指数数据历史初始化.\n 查询r_basic_data表中source_type为1的所有纳米赛事id作为指定赛事id.\n 查询nami_football_match表获取指定赛事id范围内完场比赛以及未来14天内未开赛的比赛（#注：根据配置文件nami-match-odds-history-span的值判断，单位为天，不填时则为查询库中所有已完成数据，有值是则为当前时间前n天的已完场数据，默认为空）.\n 根据查询列表中的matchId循环访问纳米“获取单场比赛指数数据/football/odds/history”接口获取亚盘，欧赔信息.(#注：1.目前只处理接口返回中的亚盘信息;2.当前只处理赛前赔率信息，只处理比赛状态为未开始1的赔率数据;)\n 保存数据至nami_football_odds表（#注：每次更新前会删除比赛id下的所有原始数据后，再进行更新操作）.\n [流程图]（https://alidocs.dingtalk.com/i/nodes/9E05BDRVQG7x4vpYSG69BNBb863zgkYA?utm_scene=team_space&iframeQuery=anchorId%3Duu_m83tdqafrcq726f0b6）\n ```yaml\n errorCode:\n - 31: 服务异常\n - 32: 服务调用失败\n - 9999: 未知错误 # 纳米数据源状态码",
+        "operationId" : "namiFootballOddsHistoryInit",
+        "responses" : {
+          "200" : {
+            "description" : "@CommonResult<?>",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/CommonResultObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/nami/football/odds-euro/update" : {
+      "get" : {
+        "tags" : [ "nami-football-collection-controller" ],
+        "summary" : "纳米-足球-纳米足球实时百欧数据更新.",
+        "description" : "纳米-足球-纳米足球实时百欧数据更新.\n 查询r_basic_data表中source_type为1的所有纳米赛事id作为指定赛事id\n 访问纳米“获取实时百欧指数数据/football/odds/europe/live”接口获取赔率变动信息(#注：\n     1、对应nami_football_match中不存在的比赛信息不做处理;\n     2、比赛信息不在指定纳米赛事id范围内的比赛不做处理;\n     3、列表中是否修正数据状态为1事，代表为需要删除的旧数据，需要删除库里该条记录信息).\n 保存数据至nami_football_europe_odds表.\n [流程图]（https://alidocs.dingtalk.com/i/nodes/9E05BDRVQG7x4vpYSG69BNBb863zgkYA?utm_scene=team_space&iframeQuery=anchorId%3Duu_m8cqdf3cgdplovnp9w9）\n ```yaml\n errorCode:\n - 31: 服务异常\n - 32: 服务调用失败\n - 9999: 未知错误 # 纳米数据源状态码",
+        "operationId" : "namiFootballOddsEuroUpdate",
+        "responses" : {
+          "200" : {
+            "description" : "@CommonResult<?>",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/CommonResultObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/nami/football/odds-euro-history/init" : {
+      "get" : {
+        "tags" : [ "nami-football-collection-controller" ],
+        "summary" : "纳米-足球-纳米比赛单场比赛百欧指数数据历史初始化.",
+        "description" : "纳米-足球-纳米比赛单场比赛百欧指数数据历史初始化.\n 查询r_basic_data表中source_type为1的所有纳米赛事id作为指定赛事id.\n 查询nami_football_match表获取指定赛事id范围内完场比赛以及未来14天内未开赛的比赛（#注：根据配置文件nami-match-odds-history-span的值判断，单位为天，不填时则为查询库中所有已完成数据，有值是则为当前时间前n天的已完场数据，默认为空）.\n 根据查询列表中的matchId循环访问纳米“获取单场比赛指数数据/football/odds/europe/history”接口获取百欧指数信息.\n 保存数据至nami_football_europe_odds表（#注：每次更新前会删除比赛id下的所有原始数据后，再进行更新操作）.\n [流程图]（https://alidocs.dingtalk.com/i/nodes/9E05BDRVQG7x4vpYSG69BNBb863zgkYA?utm_scene=team_space&iframeQuery=anchorId%3Duu_m8cq51e77zxwljdyqdt）\n ```yaml\n errorCode:\n - 31: 服务异常\n - 32: 服务调用失败\n - 9999: 未知错误 # 纳米数据源状态码",
+        "operationId" : "namiFootballOddsEuroHistoryInit",
+        "responses" : {
+          "200" : {
+            "description" : "@CommonResult<?>",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/CommonResultObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/nami/football/odds-euro-company/update" : {
+      "get" : {
+        "tags" : [ "nami-football-collection-controller" ],
+        "summary" : "纳米-足球-纳米百欧公司列表数据.",
+        "description" : "纳米-足球-纳米百欧公司列表数据.\n 访问纳米“获取百欧公司列表”odds/europe/company/list接口获取数据详情.\n 更新至数据库nami_football_europe_odds_company表中.\n [流程图](https://alidocs.dingtalk.com/i/nodes/9E05BDRVQG7x4vpYSG69BNBb863zgkYA?utm_scene=team_space&iframeQuery=anchorId%3Duu_m8cq3n3tu9908z90kdf)\n ```yaml\n errorCode:\n - 31: 服务异常\n - 32: 服务调用失败\n - 9999: 未知错误 # 纳米数据源状态码",
+        "operationId" : "namiFootballOddsEuropeCompanyList",
+        "responses" : {
+          "200" : {
+            "description" : "@CommonResult<?>",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/CommonResultObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/nami/football/match/update" : {
+      "get" : {
+        "tags" : [ "nami-football-collection-controller" ],
+        "summary" : "纳米-足球-比赛信息增量更新.",
+        "description" : "纳米-足球-比赛信息增量更新.\n 根据key:data-collection:nami_football_match_timespan中的时间戳获取增量数据，并保存至数据库.\n 更新完成后将更新的时间戳,原数据保存至redis中.\n 涉及redis字段 ：\n 1. string类型 key:data-collection:nami_football_match_timespan value:时间戳.\n 2. hash类型 key:data-collection:nami_football_match_data field:时间戳 value:此次更新的数据内容.\n ```yaml\n errorCode:\n - 31: 服务异常\n - 32: 服务调用失败\n - 9999: 未知错误 # 纳米数据源状态码\n - 2: 请先初始化数据，再执行增量更新\n ```",
+        "operationId" : "namiFootballMatch",
+        "parameters" : [ {
+          "name" : "timestamp",
+          "in" : "query",
+          "description" : "时间戳(可选)，如果传入则使用该时间戳且不操作Redis，如果不传则从Redis获取并保存到Redis",
+          "required" : false,
+          "schema" : { }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "@CommonResult<?> 初始化结果",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/CommonResultObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/nami/football/match/live" : {
+      "get" : {
+        "tags" : [ "nami-football-collection-controller" ],
+        "summary" : "纳米-足球-获取实时统计数据.",
+        "description" : "纳米-足球-获取实时统计数据.\n 访问/football/match/live接口获取最近120min内的比赛事件.\n 将统计数据更新至nami_football_match_live表中.\n[流程图](https://alidocs.dingtalk.com/i/nodes/9E05BDRVQG7x4vpYSG69BNBb863zgkYA?utm_scene=team_space&iframeQuery=anchorId%3Duu_m83tf29yolaibqfklqs)\n\n\n ```yaml\n errorCode:\n - 31: 服务异常\n - 32: 服务调用失败\n - 9999: 未知错误 # 纳米数据源状态码",
+        "operationId" : "namiFootballMatchLive",
+        "responses" : {
+          "200" : {
+            "description" : "@CommonResult<?>",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/CommonResultObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/nami/football/match/init" : {
+      "get" : {
+        "tags" : [ "nami-football-collection-controller" ],
+        "summary" : "纳米-足球-比赛信息初始化.",
+        "description" : "纳米-足球-比赛信息初始化.\n 首次获取数据时，对比赛信息进行全量更新保存至数据库.\n 更新完成后将更新的时间戳,原数据保存至redis中.\n 涉及redis字段 ：\n 1. string类型 key:data-collection:nami_football_match_timespan value:时间戳.\n 2. hash类型 key:data-collection:nami_football_match_data field:时间戳 value:此次更新的数据内容.\n ```yaml\n errorCode:\n - 31: 服务异常\n - 32: 服务调用失败\n - 9999: 未知错误 # 纳米数据源状态码\n ```",
+        "operationId" : "namiFootballMatchInit",
+        "responses" : {
+          "200" : {
+            "description" : "@CommonResult<?> 初始化结果",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/CommonResultObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/nami/football/match/analysis" : {
+      "get" : {
+        "tags" : [ "nami-football-collection-controller" ],
+        "summary" : "纳米-足球-获取比赛分析数据.",
+        "description" : "纳米-足球-获取比赛分析数据.\n\n  通过配置中的日期范围（nami-football-match-analysis-span）按 match_time 筛选 s_match 表中已标准化且在时间范围内的比赛（#注：配置的数字 n 单位为天，如果 n 为 2，则包含当天至未来第 2 天）。\n\n 访问/football/match/analysis接口获取比赛分析统计数据\n 将统计数据更新至nami_football_match_analysis表中.\n[流程图](https://alidocs.dingtalk.com/i/nodes/9E05BDRVQG7x4vpYSG69BNBb863zgkYA?utm_scene=team_space&iframeQuery=anchorId%3Duu_m83ujydwo58mywkz4g)\n\n\n ```yaml\n errorCode:\n - 31: 服务异常\n - 32: 服务调用失败\n - 9999: 未知错误 # 纳米数据源状态码",
+        "operationId" : "namiFootballMatchAnalysis",
+        "responses" : {
+          "200" : {
+            "description" : "@CommonResult<?>",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/CommonResultObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/nami/football/deleted" : {
+      "get" : {
+        "tags" : [ "nami-football-collection-controller" ],
+        "summary" : "纳米-足球-获取删除数据.",
+        "description" : "纳米-足球-获取删除数据.\n 访问/football/deleted接口获取24小时内删除的数据id.\n 将删除数据更新至nami_football_deleted表中.\n [流程图]（https://alidocs.dingtalk.com/i/nodes/9E05BDRVQG7x4vpYSG69BNBb863zgkYA?utm_scene=team_space&iframeQuery=anchorId%3Duu_m71bdfi0tj6gqv1ll79）\n ```yaml\n errorCode:\n - 31: 服务异常\n - 32: 服务调用失败\n - 9999: 未知错误 # 纳米数据源状态码",
+        "operationId" : "namiFootballDeleted",
+        "responses" : {
+          "200" : {
+            "description" : "@CommonResult<?>",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/CommonResultObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/nami/football/country/init" : {
+      "get" : {
+        "tags" : [ "nami-football-collection-controller" ],
+        "summary" : "纳米-足球-国家信息初始化.",
+        "description" : "纳米-足球-国家信息初始化.\n 首次获取数据时，对国家信息进行全量更新保存至数据库\n ```yaml\n errorCode:\n - 31: 服务异常\n - 32: 服务调用失败\n - 9999: 未知错误 # 纳米数据源状态码\n ```",
+        "operationId" : "namiFootballCountryInit",
+        "responses" : {
+          "200" : {
+            "description" : "@CommonResult<?> 初始化结果",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/CommonResultObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/nami/football/competition/update" : {
+      "get" : {
+        "tags" : [ "nami-football-collection-controller" ],
+        "summary" : "纳米-足球-赛事信息增量更新.",
+        "description" : "纳米-足球-赛事信息增量更新.\n 根据key:data-collection:nami_football_competition_timespan中的时间戳获取增量数据，并保存至数据库.\n 更新完成后将更新的时间戳,原数据保存至redis中.\n 涉及redis字段 ：\n 1. string类型 key:data-collection:nami_football_competition_timespan value:时间戳.\n 2. hash类型 key:data-collection:nami_football_competition_data field:时间戳 value:此次更新的数据内容.\n ```yaml\n errorCode:\n - 31: 服务异常\n - 32: 服务调用失败\n - 9999: 未知错误 # 纳米数据源状态码\n - 2: 请先初始化数据，再执行增量更新\n ```",
+        "operationId" : "namiFootballCompetition",
+        "responses" : {
+          "200" : {
+            "description" : "@CommonResult<?> 初始化结果",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/CommonResultObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/nami/football/competition/rule/update" : {
+      "get" : {
+        "tags" : [ "nami-football-collection-controller" ],
+        "summary" : "纳米-足球-赛事赛制信息增量更新.",
+        "description" : "纳米-足球-赛事赛制信息增量更新.\n 根据key:data-collection:nami_football_competition_rule_timespan中的时间戳获取增量数据，并保存至数据库.\n 更新完成后将更新的时间戳,原数据保存至redis中.\n 涉及redis字段 ：\n 1. string类型 key:data-collection:nami_football_competition_rule_timespan value:时间戳.\n 2. hash类型 key:data-collection:nami_football_competition_rule_data field:时间戳 value:此次更新的数据内容.\n ```yaml\n errorCode:\n - 31: 服务异常\n - 32: 服务调用失败\n - 9999: 未知错误 # 纳米数据源状态码\n - 2: 请先初始化数据，再执行增量更新\n ```",
+        "operationId" : "namiFootballCompetitionRule",
+        "responses" : {
+          "200" : {
+            "description" : "@CommonResult<?> 初始化结果",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/CommonResultObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/nami/football/competition/rule/init" : {
+      "get" : {
+        "tags" : [ "nami-football-collection-controller" ],
+        "summary" : "纳米-足球-赛事赛制信息初始化.",
+        "description" : "纳米-足球-赛事赛制信息初始化.\n 首次获取数据时，对赛事赛制信息进行全量更新保存至数据库.\n 更新完成后将更新的时间戳,原数据保存至redis中.\n 涉及redis字段 ：\n 1. string类型 key:data-collection:nami_football_competition_rule_timespan value:时间戳.\n 2. hash类型 key:data-collection:nami_football_competition_rule_data field:时间戳 value:此次更新的数据内容.\n ```yaml\n errorCode:\n - 31: 服务异常\n - 32: 服务调用失败\n - 9999: 未知错误 # 纳米数据源状态码\n ```",
+        "operationId" : "namiFootballCompetitionRuleInit",
+        "responses" : {
+          "200" : {
+            "description" : "@CommonResult<?> 初始化结果",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/CommonResultObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/nami/football/competition/init" : {
+      "get" : {
+        "tags" : [ "nami-football-collection-controller" ],
+        "summary" : "纳米-足球-赛事信息初始化.",
+        "description" : "纳米-足球-赛事信息初始化.\n 首次获取数据时，对赛事信息进行全量更新保存至数据库.\n 更新完成后将更新的时间戳,原数据保存至redis中.\n 涉及redis字段 ：\n 1. string类型 key:data-collection:nami_football_competition_timespan value:时间戳.\n 2. hash类型 key:data-collection:nami_football_competition_data field:时间戳 value:此次更新的数据内容.\n ```yaml\n errorCode:\n - 31: 服务异常\n - 32: 服务调用失败\n - 9999: 未知错误 # 纳米数据源状态码\n ```",
+        "operationId" : "namiFootballCompetitionInit",
+        "responses" : {
+          "200" : {
+            "description" : "@CommonResult<?> 初始化结果",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/CommonResultObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/nami/football/category/init" : {
+      "get" : {
+        "tags" : [ "nami-football-collection-controller" ],
+        "summary" : "纳米-足球-分类(洲际)信息初始化.",
+        "description" : "纳米-足球-分类(洲际)信息初始化.\n 首次获取数据时，对分类(洲际)信息进行全量更新保存至数据库\n ```yaml\n errorCode:\n - 31: 服务异常\n - 32: 服务调用失\n - 9999: 未知错误 # 纳米数据源状态码\n ```",
+        "operationId" : "namiFootballCategoryInit",
+        "responses" : {
+          "200" : {
+            "description" : "@CommonResult<?> 初始化结果",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/CommonResultObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/nami/basketball/venue/update" : {
+      "get" : {
+        "tags" : [ "nami-basketball-collection-controller" ],
+        "summary" : "纳米-篮球-场馆信息增量更新.",
+        "description" : "纳米-篮球-场馆信息增量更新.\n 根据key:data-collection:nami_basketball_venue_timespan中的时间戳获取增量数据，并保存至数据库.\n 更新完成后将更新的时间戳,原数据保存至redis中.\n 涉及redis字段 ：\n 1. string类型 key:data-collection:nami_basketball_venue_timespan value:时间戳.\n 2. hash类型 key:data-collection:nami_basketball_venue_data field:时间戳 value:此次更新的数据内容.\n ```yaml\n errorCode:\n - 31: 服务异常\n - 32: 服务调用失\n - 9999: 未知错误 # 纳米数据源状态码\n - 2: 请先初始化数据，再执行增量更新\n ```",
+        "operationId" : "namiBasketballVenueUpdate",
+        "responses" : {
+          "200" : {
+            "description" : "@CommonResult<?> 初始化结果",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/CommonResultObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/nami/basketball/venue/init" : {
+      "get" : {
+        "tags" : [ "nami-basketball-collection-controller" ],
+        "summary" : "纳米-篮球-场馆信息初始化.",
+        "description" : "纳米-篮球-场馆信息初始化.\n 首次获取数据时，对场馆信息进行全量更新保存至数据库.\n 更新完成后将更新的时间戳,原数据保存至redis中.\n 涉及redis字段 ：\n 1. string类型 key:data-collection:nami_basketball_venue_timespan value:时间戳.\n 2. hash类型 key:data-collection:nami_basketball_venue_data field:时间戳 value:此次更新的数据内容.\n ```yaml\n errorCode:\n - 31: 服务异常\n - 32: 服务调用失败\n - 9999: 未知错误 # 纳米数据源状态码\n ```",
+        "operationId" : "namiBasketballVenueInit",
+        "responses" : {
+          "200" : {
+            "description" : "@CommonResult<?> 初始化结果",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/CommonResultObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/nami/basketball/team/update" : {
+      "get" : {
+        "tags" : [ "nami-basketball-collection-controller" ],
+        "summary" : "纳米-篮球-球队信息增量更新.",
+        "description" : "纳米-篮球-球队信息增量更新.\n 根据key:data-collection:nami_basketball_team_timespan中的时间戳获取增量数据，并保存至数据库.\n 更完成后将更新的时间戳,原数据保存至redis中.\n 涉及redis字段 ：\n 1. string类型 key:data-collection:nami_basketball_team_timespan value:时间戳.\n 2. hash类型 key:data-collection:nami_basketball_team_data field:时间戳 value:此次更新的数据内容.\n ```yaml\n errorCode:\n - 31: 服务异常\n - 32: 服务调用失败\n - 9999: 未知错误 # 纳米数据源状态码\n - 2: 请先初始化数据，再执行增量更新\n ```",
+        "operationId" : "namiBasketballTeamUpdate",
+        "responses" : {
+          "200" : {
+            "description" : "@CommonResult<?> 初始化结果",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/CommonResultObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/nami/basketball/team/init" : {
+      "get" : {
+        "tags" : [ "nami-basketball-collection-controller" ],
+        "summary" : "纳米-篮球-球队信息初始化.",
+        "description" : "纳米-篮球-球队信息初始化.\n 首次获取数据时，对球队信息进行全量更新保存至数据库.\n 更新完成后将更新的时间戳,原数据保存至redis中.\n 涉及redis字段 ：\n 1. string类型 key:data-collection:nami_basketball_team_timespan value:时间戳.\n 2. hash类型 key:data-collection:nami_basketball_team_data field:时间戳 value:此次更新的数据内容.\n ```yaml\n errorCode:\n - 31: 服务异常\n - 32: 服务调用失败\n - 9999: 未知错误 # 纳米数据源状态码\n ```",
+        "operationId" : "namiBasketballTeamInit",
+        "responses" : {
+          "200" : {
+            "description" : "@CommonResult<?> 初始化结果",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/CommonResultObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/nami/basketball/stage/update" : {
+      "get" : {
+        "tags" : [ "nami-basketball-collection-controller" ],
+        "summary" : "纳米-篮球-阶段信息增量更新.",
+        "description" : "纳米-篮球-阶段信息增量更新.\n 根据key:data-collection:nami_basketball_stage_timespan中的时间戳获取增量数据，并保存至数据库.\n 更新完成后将更新的时间戳,原数据保存至redis中.\n 涉及redis字段 ：\n 1. string类型 key:data-collection:nami_basketball_stage_timespan value:时间戳.\n 2. hash类型 key:data-collection:nami_basketball_stage_data field:时间戳 value:此次更新的数据内容.\n ```yaml\n errorCode:\n - 31: 服务异常\n - 32: 服务调用失败\n - 9999: 未知错误 # 纳米数据源状态码\n - 2: 请先初始化数据，再执行增量更新\n ```",
+        "operationId" : "namiBasketballStageUpdate",
+        "responses" : {
+          "200" : {
+            "description" : "@CommonResult<?> 初始化结果",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/CommonResultObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/nami/basketball/stage/init" : {
+      "get" : {
+        "tags" : [ "nami-basketball-collection-controller" ],
+        "summary" : "纳米-篮球-阶段信息初始化.",
+        "description" : "纳米-篮球-阶段信息初始化.\n 首次获取数据时，对阶段信息进行全量更新保存至数据库.\n 更新完成后将更新的时间戳,原数据保存至redis中.\n 涉及redis字段 ：\n 1. string类型 key:data-collection:nami_basketball_stage_timespan value:时间戳.\n 2. hash类型 key:data-collection:nami_basketball_stage_data field:时间戳 value:此次更新的数据内容.\n ```yaml\n errorCode:\n - 31: 服务异常\n - 32: 服务调用失败\n - 9999: 未知错误 # 纳米数据源状态码\n ```",
+        "operationId" : "namiBasketballStageInit",
+        "responses" : {
+          "200" : {
+            "description" : "@CommonResult<?> 初始化结果",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/CommonResultObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/nami/basketball/season/update" : {
+      "get" : {
+        "tags" : [ "nami-basketball-collection-controller" ],
+        "summary" : "纳米-篮球-赛季信息增量更新.",
+        "description" : "纳米-篮球-赛季信息增量更新.\n 根据key:data-collection:nami_basketball_season_timespan中的时间戳获取增量数据，并保存至数据库.\n 更新完成后将更新的时间戳,原数据保存至redis中.\n 涉及redis字段 ：\n 1. string类型 key:data-collection:nami_basketball_season_timespan value:时间戳.\n 2. hash类型 key:data-collection:nami_basketball_season_data field:时间戳 value:此次更新的数据内容.\n ```yaml\n errorCode:\n - 31: 服务异常\n - 32: 服务调用失败\n - 9999: 未知错误 # 纳米数据源状态码\n - 2: 请先初始化数据，再执行增量更新\n ```",
+        "operationId" : "namiBasketballSeasonUpdate",
+        "responses" : {
+          "200" : {
+            "description" : "@CommonResult<?> 初始化结果",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/CommonResultObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/nami/basketball/season/init" : {
+      "get" : {
+        "tags" : [ "nami-basketball-collection-controller" ],
+        "summary" : "纳米-篮球-赛季信息初始化.",
+        "description" : "纳米-篮球-赛季信息初始化.\n 首次获取数据时，对赛季信息进行全量更新保存至数据库.\n 保存赛季时，需要将信息保存至nami_basketball_stage_newgoal作为阶段信息，其中season_id存到stage_id，赛季名称存到name_zh，order固定为1.\n 更新完成后将更新的时间戳,原数据保存至redis中.\n 涉及redis字段 ：\n 1. string类型 key:data-collection:nami_basketball_season_timespan value:时间戳.\n 2. hash类型 key:data-collection:nami_basketball_season_data field:时间戳 value:此次更新的数据内容.\n\n ```yaml\n errorCode:\n - 31: 服务异常\n - 32: 服务调用失败\n - 9999: 未知错误 # 纳米数据源状态码\n ```",
+        "operationId" : "namiBasketballSeasonInit",
+        "responses" : {
+          "200" : {
+            "description" : "@CommonResult<?> 初始化结果",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/CommonResultObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/nami/basketball/match/update" : {
+      "get" : {
+        "tags" : [ "nami-basketball-collection-controller" ],
+        "summary" : "纳米-篮球-比赛信息增量更新.",
+        "description" : "纳米-篮球-比赛信息增量更新.\n 根据key:data-collection:nami_basketball_match_timespan中的时间戳获取增量数据，并保存至数据库.\n 更新完成后将更新的时间戳,原数据保存至redis中.\n 涉及redis字段 ：\n 1. string类型 key:data-collection:nami_basketball_match_timespan value:时间戳.\n 2. hash类型 key:data-collection:nami_basketball_match_data field:时间戳 value:此次更新的数据内容.\n ```yaml\n 注：因篮球阶段匹配需求，表round_stage_id保存为season_id.\n errorCode:\n - 31: 服务异常\n - 32: 服务调用失败\n - 9999: 未知错误 # 纳米数据源状态码\n - 2: 请先初始化数据，再执行增量更新\n ```",
+        "operationId" : "namiBasketballMatchUpdate",
+        "responses" : {
+          "200" : {
+            "description" : "@CommonResult<?> 初始化结果",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/CommonResultObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/nami/basketball/match/init" : {
+      "get" : {
+        "tags" : [ "nami-basketball-collection-controller" ],
+        "summary" : "纳米-篮球-比赛信息初始化.",
+        "description" : "纳米-篮球-比赛信息初始化.\n 首次获取数据时，对比赛信息进行全量更新保存至数据库.\n 更新完成后将更新的时间戳,原数据保存至redis中.\n 涉及redis字段 ：\n 1. string类型 key:data-collection:nami_basketball_match_timespan value:时间戳.\n 2. hash类型 key:data-collection:nami_basketball_match_data field:时间戳 value:此次更新的数据内容.\n ```yaml\n 注：因篮球阶段匹配需求，表round_stage_id保存为season_id.\n errorCode:\n - 31: 服务异常\n - 32: 服务调用失败\n - 9999: 未知错误 # 纳米数据源状态码\n ```",
+        "operationId" : "namiBasketballMatchInit",
+        "responses" : {
+          "200" : {
+            "description" : "@CommonResult<?> 初始化结果",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/CommonResultObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/nami/basketball/deleted" : {
+      "get" : {
+        "tags" : [ "nami-basketball-collection-controller" ],
+        "summary" : "纳米-篮球-获取删除数据.",
+        "description" : "纳米-篮球-获取删除数据.\n 访问/basketball/deleted接口获取24小时内删除的数据id.\n 将删除数据更新至nami_basketball_deleted表中.\n [流程图]（https://alidocs.dingtalk.com/i/nodes/9E05BDRVQG7x4vpYSG69BNBb863zgkYA?utm_scene=team_space&iframeQuery=anchorId%3Duu_m71bdfi0tj6gqv1ll79）\n ```yaml\n errorCode:\n - 31: 服务异常\n - 32: 服务调用失败\n - 9999: 未知错误 # 纳米数据源状态码",
+        "operationId" : "namiBasketballDeleted",
+        "responses" : {
+          "200" : {
+            "description" : "@CommonResult<?>",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/CommonResultObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/nami/basketball/country/init" : {
+      "get" : {
+        "tags" : [ "nami-basketball-collection-controller" ],
+        "summary" : "纳米-篮球-国家信息初始化.",
+        "description" : "纳米-篮球-国家信息初始化.\n 首次获取数据时，对国家信息进行全量更新保存至数据库\n ```yaml\n errorCode:\n - 31: 服务异常\n - 32: 服务调用失败\n - 9999: 未知错误 # 纳米数据源状态码\n ```",
+        "operationId" : "namiBasketballCountryInit",
+        "responses" : {
+          "200" : {
+            "description" : "@CommonResult<?> 初始化结果",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/CommonResultObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/nami/basketball/competition/update" : {
+      "get" : {
+        "tags" : [ "nami-basketball-collection-controller" ],
+        "summary" : "纳米-篮球-赛事信息增量更新.",
+        "description" : "纳米-篮球-赛事信息增量更新.\n 根据key:data-collection:nami_basketball_competition_timespan中的时间戳获取增量数据，并保存至数据库.\n 更新完成后将更新的时间戳,原数据保存至redis中.\n 涉及redis字段 ：\n 1. string类型 key:data-collection:nami_basketball_competition_timespan value:时间戳.\n 2. hash类型 key:data-collection:nami_basketball_competition_data field:时间戳 value:此次更新的数据内容.\n ```yaml\n errorCode:\n - 31: 服务异常\n - 32: 服务调用失败\n - 9999: 未知错误 # 纳米数据源状态码\n - 2: 请先初始化数据，再执行增量更新\n ```",
+        "operationId" : "namiBasketballCompetitionUpdate",
+        "responses" : {
+          "200" : {
+            "description" : "@CommonResult<?> 初始化结果",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/CommonResultObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/nami/basketball/competition/rule/update" : {
+      "get" : {
+        "tags" : [ "nami-basketball-collection-controller" ],
+        "summary" : "纳米-篮球-赛事赛制信息增量更新.",
+        "description" : "纳米-篮球-赛事赛制信息增量更新.\n 根据key:data-collection:nami_basketball_competition_rule_timespan中的时间戳获取增量数据，并保存至数据库.\n 更新完成后将更新的时间戳,原数据保存至redis中.\n 涉及redis字段 ：\n 1. string类型 key:data-collection:nami_basketball_competition_rule_timespan value:时间戳.\n 2. hash类型 key:data-collection:nami_basketball_competition_rule_data field:时间戳 value:此次更新的数据内容.\n ```yaml\n errorCode:\n - 31: 服务异常\n - 32: 服务调用失败\n - 9999: 未知错误 # 纳米数据源状态码\n - 2: 请先初始化数据，再执行增量更新\n ```",
+        "operationId" : "namiBasketballCompetitionRuleUpdate",
+        "responses" : {
+          "200" : {
+            "description" : "@CommonResult<?> 初始化结果",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/CommonResultObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/nami/basketball/competition/rule/init" : {
+      "get" : {
+        "tags" : [ "nami-basketball-collection-controller" ],
+        "summary" : "纳米-篮球-赛事赛制信息初始化.",
+        "description" : "纳米-篮球-赛事赛制信息初始化.\n 首次获取数据时，对赛事赛制信息进行全量更新保存至数据库.\n 更新完成后将更新的时间戳,原数据保存至redis中.\n 涉及redis字段 ：\n 1. string类型 key:data-collection:nami_basketball_competition_rule_timespan value:时间戳.\n 2. hash类型 key:data-collection:nami_basketball_competition_rule_data field:时间戳 value:此次更新的数据内容.\n ```yaml\n errorCode:\n - 31: 服务异常\n - 32: 服务调用失败\n - 9999: 未知错误 # 纳米数据源状态码\n ```",
+        "operationId" : "namiBasketballCompetitionRuleInit",
+        "responses" : {
+          "200" : {
+            "description" : "@CommonResult<?> 初始化结果",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/CommonResultObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/nami/basketball/competition/init" : {
+      "get" : {
+        "tags" : [ "nami-basketball-collection-controller" ],
+        "summary" : "纳米-篮球-赛事信息初始化.",
+        "description" : "纳米-篮球-赛事信息初始化.\n 首次获取数据时，对赛事信息进行全量更新保存至数据库.\n 更新完成后将更新的时间戳,原数据保存至redis中.\n 涉及redis字段 ：\n 1. string类型 key:data-collection:nami_basketball_competition_timespan value:时间戳.\n 2. hash类型 key:data-collection:nami_basketball_competition_data field:时间戳 value:此次更新的数据内容.\n ```yaml\n errorCode:\n - 31: 服务异常\n - 32: 服务调用失败\n - 9999: 未知错误 # 纳米数据源状态码\n ```",
+        "operationId" : "namiBasketballCompetitionInit",
+        "responses" : {
+          "200" : {
+            "description" : "@CommonResult<?> 初始化结果",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/CommonResultObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/nami/basketball/category/init" : {
+      "get" : {
+        "tags" : [ "nami-basketball-collection-controller" ],
+        "summary" : "纳米-篮球-分类(洲际)信息初始化.",
+        "description" : "纳米-篮球-分类(洲际)信息初始化.\n 首次获取数据时，对分类(洲际)信息进行全量更新保存至数据库\n ```yaml\n errorCode:\n - 31: 服务异常\n - 32: 服务调用失\n - 9999: 未知错误 # 纳米数据源状态码\n ```",
+        "operationId" : "namiBasketballCategoryInit",
+        "responses" : {
+          "200" : {
+            "description" : "@CommonResult<?> 初始化结果",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/CommonResultObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/nami/american-football/venue/update" : {
+      "get" : {
+        "tags" : [ "nami-american-football-collection-controller" ],
+        "summary" : "纳米-橄榄球-场馆信息增量更新.",
+        "description" : "纳米-橄榄球-场馆信息增量更新.\n 根据key:data-collection:nami_american_football_venue_timespan中的时间戳获取增量数据，并保存至数据库.\n 更新完成后将更新的时间戳保存至redis中.\n 涉及redis字段 ：\n 1. string类型 key:data-collection:nami_american_football_venue_timespan value:时间戳.\n ```yaml\n errorCode:\n - 31: 服务异常\n - 32: 服务调用失\n - 9999: 未知错误 # 纳米数据源状态码\n - 2: 请先初始化数据，再执行增量更新\n ```",
+        "operationId" : "namiIAmericanFootballVenueUpdate",
+        "responses" : {
+          "200" : {
+            "description" : "@CommonResult<?> 初始化结果",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/CommonResultObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/nami/american-football/venue/init" : {
+      "get" : {
+        "tags" : [ "nami-american-football-collection-controller" ],
+        "summary" : "纳米-橄榄球-场馆信息初始化.",
+        "description" : "纳米-橄榄球-场馆信息初始化.\n 首次获取数据时，对场馆信息进行全量更新保存至数据库.\n 更新完成后将更新的时间戳保存至redis中.\n 涉及redis字段 ：\n 1. string类型 key:data-collection:nami_american_football_venue_timespan value:时间戳.\n ```yaml\n errorCode:\n - 31: 服务异常\n - 32: 服务调用失败\n - 9999: 未知错误 # 纳米数据源状态码\n ```",
+        "operationId" : "namiIAmericanFootballVenueInit",
+        "responses" : {
+          "200" : {
+            "description" : "@CommonResult<?> 初始化结果",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/CommonResultObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/nami/american-football/team/update" : {
+      "get" : {
+        "tags" : [ "nami-american-football-collection-controller" ],
+        "summary" : "纳米-橄榄球-球队信息增量更新.",
+        "description" : "纳米-橄榄球-球队信息增量更新.\n 根据key:data-collection:nami_american_football_team_timespan中的时间戳获取增量数据，并保存至数据库.\n 更新完成后将更新的时间戳保存至redis中.\n 涉及redis字段 ：\n 1. string类型 key:data-collection:nami_american_football_team_timespan value:时间戳.\n ```yaml\n errorCode:\n - 31: 服务异常\n - 32: 服务调用失败\n - 9999: 未知错误 # 纳米数据源状态码\n - 2: 请先初始化数据，再执行增量更新\n ```",
+        "operationId" : "namiIAmericanFootballTeamUpdate",
+        "responses" : {
+          "200" : {
+            "description" : "@CommonResult<?> 初始化结果",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/CommonResultObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/nami/american-football/team/init" : {
+      "get" : {
+        "tags" : [ "nami-american-football-collection-controller" ],
+        "summary" : "纳米-橄榄球-球队信息初始化.",
+        "description" : "纳米-橄榄球-球队信息初始化.\n 首次获取数据时，对球队信息进行全量更新保存至数据库.\n 更新完成后将更新的时间戳保存至redis中.\n 涉及redis字段 ：\n 1. string类型 key:data-collection:nami_american_football_team_timespan value:时间戳.\n ```yaml\n errorCode:\n - 31: 服务异常\n - 32: 服务调用失败\n - 9999: 未知错误 # 纳米数据源状态码\n ```",
+        "operationId" : "namiIAmericanFootballTeamInit",
+        "responses" : {
+          "200" : {
+            "description" : "@CommonResult<?> 初始化结果",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/CommonResultObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/nami/american-football/stage/update" : {
+      "get" : {
+        "tags" : [ "nami-american-football-collection-controller" ],
+        "summary" : "纳米-橄榄球-阶段信息增量更新.",
+        "description" : "纳米-橄榄球-阶段信息增量更新.\n 根据key:data-collection:nami_american_football_stage_timespan中的时间戳获取增量数据，并保存至数据库.\n 更新完成后将更新的时间戳保存至redis中.\n 涉及redis字段 ：\n 1. string类型 key:data-collection:nami_american_football_stage_timespan value:时间戳.\n ```yaml\n errorCode:\n - 31: 服务异常\n - 32: 服务调用失败\n - 9999: 未知错误 # 纳米数据源状态码\n - 2: 请先初始化数据，再执行增量更新\n ```",
+        "operationId" : "namiIAmericanFootballStageUpdate",
+        "responses" : {
+          "200" : {
+            "description" : "@CommonResult<?> 初始化结果",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/CommonResultObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/nami/american-football/stage/init" : {
+      "get" : {
+        "tags" : [ "nami-american-football-collection-controller" ],
+        "summary" : "纳米-橄榄球-阶段信息初始化.",
+        "description" : "纳米-橄榄球-阶段信息初始化.\n 首次获取数据时，对阶段信息进行全量更新保存至数据库.\n 更新完成后将更新的时间戳保存至redis中.\n 涉及redis字段 ：\n 1. string类型 key:data-collection:nami_american_football_stage_timespan value:时间戳.\n ```yaml\n errorCode:\n - 31: 服务异常\n - 32: 服务调用失败\n - 9999: 未知错误 # 纳米数据源状态码\n ```",
+        "operationId" : "namiIAmericanFootballStageInit",
+        "responses" : {
+          "200" : {
+            "description" : "@CommonResult<?> 初始化结果",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/CommonResultObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/nami/american-football/season/update" : {
+      "get" : {
+        "tags" : [ "nami-american-football-collection-controller" ],
+        "summary" : "纳米-橄榄球-赛季信息增量更新.",
+        "description" : "纳米-橄榄球-赛季信息增量更新.\n 根据key:data-collection:nami_american_football_season_timespan中的时间戳获取增量数据，并保存至数据库.\n 更新完成后将更新的时间戳保存至redis中.\n 涉及redis字段 ：\n 1. string类型 key:data-collection:nami_american_football_season_timespan value:时间戳.\n ```yaml\n errorCode:\n - 31: 服务异常\n - 32: 服务调用失败\n - 9999: 未知错误 # 纳米数据源状态码\n - 2: 请先初始化数据，再执行增量更新\n ```",
+        "operationId" : "namiIAmericanFootballSeasonUpdate",
+        "responses" : {
+          "200" : {
+            "description" : "@CommonResult<?> 初始化结果",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/CommonResultObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/nami/american-football/season/init" : {
+      "get" : {
+        "tags" : [ "nami-american-football-collection-controller" ],
+        "summary" : "纳米-橄榄球-赛季信息初始化.",
+        "description" : "纳米-橄榄球-赛季信息初始化.\n 首次获取数据时，对赛季信息进行全量更新保存至数据库.\n 更新完成后将更新的时间戳保存至redis中.\n 涉及redis字段 ：\n 1. string类型 key:data-collection:nami_american_football_season_timespan value:时间戳.\n\n ```yaml\n errorCode:\n - 31: 服务异常\n - 32: 服务调用失败\n - 9999: 未知错误 # 纳米数据源状态码\n ```",
+        "operationId" : "namiIAmericanFootballSeasonInit",
+        "responses" : {
+          "200" : {
+            "description" : "@CommonResult<?> 初始化结果",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/CommonResultObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/nami/american-football/match/update" : {
+      "get" : {
+        "tags" : [ "nami-american-football-collection-controller" ],
+        "summary" : "纳米-橄榄球-比赛信息增量更新.",
+        "description" : "纳米-橄榄球-比赛信息增量更新.\n 根据key:data-collection:nami_american_football_match_timespan中的时间戳获取增量数据，并保存至数据库.\n 更新完成后将更新的时间戳保存至redis中.\n 涉及redis字段 ：\n 1. string类型 key:data-collection:nami_american_football_match_timespan value:时间戳.\n ```yaml\n errorCode:\n - 31: 服务异常\n - 32: 服务调用失败\n - 9999: 未知错误 # 纳米数据源状态码\n - 2: 请先初始化数据，再执行增量更新\n ```",
+        "operationId" : "namiAmericanFootballMatchUpdate",
+        "responses" : {
+          "200" : {
+            "description" : "@CommonResult<?> 初始化结果",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/CommonResultObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/nami/american-football/match/init" : {
+      "get" : {
+        "tags" : [ "nami-american-football-collection-controller" ],
+        "summary" : "纳米-橄榄球-比赛信息初始化.",
+        "description" : "纳米-橄榄球-比赛信息初始化.\n 首次获取数据时，对比赛信息进行全量更新保存至数据库.\n 更新完成后将更新的时间戳保存至redis中.\n 涉及redis字段 ：\n 1. string类型 key:data-collection:nami_american_football_match_timespan value:时间戳.\n ```yaml\n errorCode:\n - 31: 服务异常\n - 32: 服务调用失败\n - 9999: 未知错误 # 纳米数据源状态码\n ```",
+        "operationId" : "namiIAmericanFootballMatchInit",
+        "responses" : {
+          "200" : {
+            "description" : "@CommonResult<?> 初始化结果",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/CommonResultObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/nami/american-football/deleted" : {
+      "get" : {
+        "tags" : [ "nami-american-football-collection-controller" ],
+        "summary" : "纳米-橄榄球-获取删除数据.",
+        "description" : "纳米-橄榄球-获取删除数据.\n 访问/american_football/deleted接口获取24小时内删除的数据id.\n 将删除数据更新至nami_american_football_deleted表中.\n [流程图]（https://alidocs.dingtalk.com/i/nodes/9E05BDRVQG7x4vpYSG69BNBb863zgkYA?utm_scene=team_space&iframeQuery=anchorId%3Duu_m71bdfi0tj6gqv1ll79）\n ```yaml\n errorCode:\n - 31: 服务异常\n - 32: 服务调用失败\n - 9999: 未知错误 # 纳米数据源状态码",
+        "operationId" : "namiAmericanFootballDeleted",
+        "responses" : {
+          "200" : {
+            "description" : "@CommonResult<?>",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/CommonResultObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/nami/american-football/country/init" : {
+      "get" : {
+        "tags" : [ "nami-american-football-collection-controller" ],
+        "summary" : "纳米-橄榄球-国家信息初始化.",
+        "description" : "纳米-橄榄球-国家信息初始化.\n 首次获取数据时，对国家信息进行全量更新保存至数据库\n ```yaml\n errorCode:\n - 31: 服务异常\n - 32: 服务调用失败\n - 9999: 未知错误 # 纳米数据源状态码\n ```",
+        "operationId" : "namiIAmericanFootballCountryInit",
+        "responses" : {
+          "200" : {
+            "description" : "@CommonResult<?> 初始化结果",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/CommonResultObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/nami/american-football/competition/update" : {
+      "get" : {
+        "tags" : [ "nami-american-football-collection-controller" ],
+        "summary" : "纳米-橄榄球-赛事信息增量更新.",
+        "description" : "纳米-橄榄球-赛事信息增量更新.\n 根据key:data-collection:nami_american_football_competition_timespan中的时间戳获取增量数据，并保存至数据库.\n 更新完成后将更新的时间戳保存至redis中.\n 涉及redis字段 ：\n 1. string类型 key:data-collection:nami_american_football_competition_timespan value:时间戳.\n ```yaml\n errorCode:\n - 31: 服务异常\n - 32: 服务调用失败\n - 9999: 未知错误 # 纳米数据源状态码\n - 2: 请先初始化数据，再执行增量更新\n ```",
+        "operationId" : "namiIAmericanFootballCompetitionUpdate",
+        "responses" : {
+          "200" : {
+            "description" : "@CommonResult<?> 初始化结果",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/CommonResultObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/nami/american-football/competition/init" : {
+      "get" : {
+        "tags" : [ "nami-american-football-collection-controller" ],
+        "summary" : "纳米-橄榄球-赛事信息初始化.",
+        "description" : "纳米-橄榄球-赛事信息初始化.\n 首次获取数据时，对赛事信息进行全量更新保存至数据库.\n 更新完成后将更新的时间戳保存至redis中.\n 涉及redis字段 ：\n 1. string类型 key:data-collection:nami_american_football_competition_timespan value:时间戳.\n ```yaml\n errorCode:\n - 31: 服务异常\n - 32: 服务调用失败\n - 9999: 未知错误 # 纳米数据源状态码\n ```",
+        "operationId" : "namiIAmericanFootballCompetitionInit",
+        "responses" : {
+          "200" : {
+            "description" : "@CommonResult<?> 初始化结果",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/CommonResultObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/nami/american-football/category/init" : {
+      "get" : {
+        "tags" : [ "nami-american-football-collection-controller" ],
+        "summary" : "纳米-橄榄球-分类(洲际)信息初始化.",
+        "description" : "纳米-橄榄球-分类(洲际)信息初始化.\n 首次获取数据时，对分类(洲际)信息进行全量更新保存至数据库\n ```yaml\n errorCode:\n - 31: 服务异常\n - 32: 服务调用失\n - 9999: 未知错误 # 纳米数据源状态码\n ```",
+        "operationId" : "namiIAmericanFootballCategoryInit",
+        "responses" : {
+          "200" : {
+            "description" : "@CommonResult<?> 初始化结果",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/CommonResultObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/healthz" : {
+      "get" : {
+        "tags" : [ "healthz-common-controller" ],
+        "operationId" : "getHealthz",
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "additionalProperties" : { }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/beitai/tournament" : {
+      "get" : {
+        "tags" : [ "beitai-collection-controller" ],
+        "summary" : "获取贝泰联赛列表\n 获取所有可用的联赛信息\n ```yaml\n errorCode:\n - 31: 服务异常\n - 32: 服务调用失败\n thirdParty:\n - 联赛列表接口：GET /tournament/list\n dbTables:\n - beitai_football_tournament 联赛信息\n ```",
+        "description" : "获取贝泰联赛列表\n 获取所有可用的联赛信息\n ```yaml\n errorCode:\n - 31: 服务异常\n - 32: 服务调用失败\n thirdParty:\n - 联赛列表接口：GET /tournament/list\n dbTables:\n - beitai_football_tournament 联赛信息\n ```",
+        "operationId" : "getTournamentList",
+        "responses" : {
+          "200" : {
+            "description" : "CommonResult<?> 联赛列表",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/CommonResultObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/beitai/tournament/season_info" : {
+      "get" : {
+        "tags" : [ "beitai-collection-controller" ],
+        "summary" : "获取贝泰联赛赛季详情\n 根据联赛ID获取该联赛的详细赛季信息，包括球队、阶段等\n ```yaml\n errorCode:\n - 31: 服务异常\n - 32: 服务调用失败\n thirdParty:\n - 赛季详情接口：GET /tournament/seasoninfo?tournamentid={tournamentId}\n dbTables:\n - beitai_football_stage 赛事阶段信息\n optimization:\n - 使用 batchGetLatestSeasons 批量查询所有赛事的最新2个赛季\n\n ```",
+        "description" : "获取贝泰联赛赛季详情\n 根据联赛ID获取该联赛的详细赛季信息，包括球队、阶段等\n ```yaml\n errorCode:\n - 31: 服务异常\n - 32: 服务调用失败\n thirdParty:\n - 赛季详情接口：GET /tournament/seasoninfo?tournamentid={tournamentId}\n dbTables:\n - beitai_football_stage 赛事阶段信息\n optimization:\n - 使用 batchGetLatestSeasons 批量查询所有赛事的最新2个赛季\n\n ```",
+        "operationId" : "getTournamentSeasonInfo",
+        "responses" : {
+          "200" : {
+            "description" : "CommonResult<?> 赛季详情",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/CommonResultObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/beitai/tournament/season" : {
+      "get" : {
+        "tags" : [ "beitai-collection-controller" ],
+        "summary" : "获取贝泰联赛赛季列表\n 根据联赛ID获取该联赛下的所有赛季信息\n ```yaml\n errorCode:\n - 31: 服务异常\n - 32: 服务调用失败\n thirdParty:\n - 赛季列表接口：GET /tournament/seasonlist\n dbTables:\n - beitai_football_season 赛季信息\n ```",
+        "description" : "获取贝泰联赛赛季列表\n 根据联赛ID获取该联赛下的所有赛季信息\n ```yaml\n errorCode:\n - 31: 服务异常\n - 32: 服务调用失败\n thirdParty:\n - 赛季列表接口：GET /tournament/seasonlist\n dbTables:\n - beitai_football_season 赛季信息\n ```",
+        "operationId" : "getTournamentSeasonList",
+        "responses" : {
+          "200" : {
+            "description" : "CommonResult<?> 赛季列表",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/CommonResultObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/beitai/team" : {
+      "get" : {
+        "tags" : [ "beitai-collection-controller" ],
+        "summary" : "获取贝泰球队列表\n 根据联赛ID获取该联赛下的所有球队信息\n ```yaml\n errorCode:\n - 31: 服务异常\n - 32: 服务调用失败\n thirdParty:\n - 球队列表接口：GET /team/list?tournamentid={tournamentId}\n dbTables:\n - beitai_football_team 球队信息\n optimization:\n - 使用 batchGetLatestSeasons 批量查询所有赛事的最新2个赛季\n ```",
+        "description" : "获取贝泰球队列表\n 根据联赛ID获取该联赛下的所有球队信息\n ```yaml\n errorCode:\n - 31: 服务异常\n - 32: 服务调用失败\n thirdParty:\n - 球队列表接口：GET /team/list?tournamentid={tournamentId}\n dbTables:\n - beitai_football_team 球队信息\n optimization:\n - 使用 batchGetLatestSeasons 批量查询所有赛事的最新2个赛季\n ```",
+        "operationId" : "getTeamList",
+        "responses" : {
+          "200" : {
+            "description" : "CommonResult<?> 球队列表",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/CommonResultObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/beitai/standings" : {
+      "get" : {
+        "tags" : [ "beitai-collection-controller" ],
+        "summary" : "获取贝泰积分榜快照采集\n 查询贝泰已标准化赛事，循环获取积分榜数据，按 SHA-256 整体快照对比入库 beitai_football_standing_snapshot 表\n 单赛季失败跳过，不影响其余；同 hash 不重复插入",
+        "description" : "获取贝泰积分榜快照采集\n 查询贝泰已标准化赛事，循环获取积分榜数据，按 SHA-256 整体快照对比入库 beitai_football_standing_snapshot 表\n 单赛季失败跳过，不影响其余；同 hash 不重复插入",
+        "operationId" : "getStandings",
+        "responses" : {
+          "200" : {
+            "description" : "CommonResult<?> 采集结果",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/CommonResultObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/beitai/standing" : {
+      "get" : {
+        "tags" : [ "beitai-collection-controller" ],
+        "summary" : "获取贝泰球队排名数据\n 根据联赛ID和赛季ID获取球队排名信息，抓取最新2个赛季的数据\n ```yaml\n errorCode:\n - 31: 服务异常\n - 32: 服务调用失败\n thirdParty:\n - 球队排名接口：GET /standing?tournamentid={tournamentId}\n dbTables:\n - beitai_football_standing 球队排名信息（包含总排名、主场排名、客场排名）\n optimization:\n - 使用 batchGetLatestSeasons 批量查询所有赛事的最新2个赛季\n ```",
+        "description" : "获取贝泰球队排名数据\n 根据联赛ID和赛季ID获取球队排名信息，抓取最新2个赛季的数据\n ```yaml\n errorCode:\n - 31: 服务异常\n - 32: 服务调用失败\n thirdParty:\n - 球队排名接口：GET /standing?tournamentid={tournamentId}\n dbTables:\n - beitai_football_standing 球队排名信息（包含总排名、主场排名、客场排名）\n optimization:\n - 使用 batchGetLatestSeasons 批量查询所有赛事的最新2个赛季\n ```",
+        "operationId" : "getStandingList",
+        "responses" : {
+          "200" : {
+            "description" : "CommonResult<?> 球队排名数据",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/CommonResultObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/beitai/match" : {
+      "get" : {
+        "tags" : [ "beitai-collection-controller" ],
+        "summary" : "获取贝泰赛程列表\n 根据联赛ID获取该联赛下的所有赛程基础信息\n ```yaml\n errorCode:\n - 31: 服务异常\n - 32: 服务调用失败\n thirdParty:\n - 赛程列表接口：GET /match/list?tournamentid={tournamentId}&seasonid={seasonId}\n dbTables:\n - beitai_football_match 赛程基础信息\n fieldSources:\n - status, matchStatus: 来自 match/list 接口\n - homeScore, awayScore, penaltiesHomeScore, penaltiesAwayScore: 来自 match/list 接口\n - liveMatchStatus, effectiveMatchStatus: 来自 live/info 接口（需要调用 /beitai/match/event）\n - homeHalfScore, awayHalfScore: 来自 live/info 接口的 periods 数据（number=1）\n - homeNormalTimeScore, awayNormalTimeScore: 来自 live/info 接口的 matchinfo 数据\n optimization:\n - 使用 batchGetLatestSeasons 批量查询所有赛事的最新2个赛季\n ```",
+        "description" : "获取贝泰赛程列表\n 根据联赛ID获取该联赛下的所有赛程基础信息\n ```yaml\n errorCode:\n - 31: 服务异常\n - 32: 服务调用失败\n thirdParty:\n - 赛程列表接口：GET /match/list?tournamentid={tournamentId}&seasonid={seasonId}\n dbTables:\n - beitai_football_match 赛程基础信息\n fieldSources:\n - status, matchStatus: 来自 match/list 接口\n - homeScore, awayScore, penaltiesHomeScore, penaltiesAwayScore: 来自 match/list 接口\n - liveMatchStatus, effectiveMatchStatus: 来自 live/info 接口（需要调用 /beitai/match/event）\n - homeHalfScore, awayHalfScore: 来自 live/info 接口的 periods 数据（number=1）\n - homeNormalTimeScore, awayNormalTimeScore: 来自 live/info 接口的 matchinfo 数据\n optimization:\n - 使用 batchGetLatestSeasons 批量查询所有赛事的最新2个赛季\n ```",
+        "operationId" : "getMatchList",
+        "responses" : {
+          "200" : {
+            "description" : "CommonResult<?> 赛程列表",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/CommonResultObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/beitai/match/event" : {
+      "get" : {
+        "tags" : [ "beitai-collection-controller" ],
+        "summary" : "获取贝泰比赛直播信息\n 根据时间范围获取比赛实时直播数据，按 Entity 注释严格更新主表字段\n ```yaml\n errorCode:\n - 31: 服务异常\n - 32: 服务调用失败\n thirdParty:\n - 比赛直播信息接口：GET /live/info?matchid={matchId}\n dbTables:\n - beitai_football_match 赛程信息（仅更新 Entity 注释明确说明来自 live 接口的字段）\n - beitai_football_match_live 直播比赛完整信息（包含所有实时数据）\n - beitai_football_period 比赛阶段比分信息\n - beitai_football_event 比赛事件信息\n fieldSources:\n - liveMatchStatus: 从live接口中获取\n - effectiveMatchStatus: 存在live时等于live_match_status\n - homeNormalTimeScore: 从live接口matchinfo字段下获取\n - awayNormalTimeScore: 从live接口matchinfo字段下获取\n - homeHalfScore: 从live接口periods字段下获取，值为1时为上半场\n - awayHalfScore: 从live接口periods字段下获取，值为1时为上半场\n ```",
+        "description" : "获取贝泰比赛直播信息\n 根据时间范围获取比赛实时直播数据，按 Entity 注释严格更新主表字段\n ```yaml\n errorCode:\n - 31: 服务异常\n - 32: 服务调用失败\n thirdParty:\n - 比赛直播信息接口：GET /live/info?matchid={matchId}\n dbTables:\n - beitai_football_match 赛程信息（仅更新 Entity 注释明确说明来自 live 接口的字段）\n - beitai_football_match_live 直播比赛完整信息（包含所有实时数据）\n - beitai_football_period 比赛阶段比分信息\n - beitai_football_event 比赛事件信息\n fieldSources:\n - liveMatchStatus: 从live接口中获取\n - effectiveMatchStatus: 存在live时等于live_match_status\n - homeNormalTimeScore: 从live接口matchinfo字段下获取\n - awayNormalTimeScore: 从live接口matchinfo字段下获取\n - homeHalfScore: 从live接口periods字段下获取，值为1时为上半场\n - awayHalfScore: 从live接口periods字段下获取，值为1时为上半场\n ```",
+        "operationId" : "getMatchLiveInfo",
+        "responses" : {
+          "200" : {
+            "description" : "CommonResult<?> 比赛直播信息",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/CommonResultObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/beitai/match/event/supplement" : {
+      "get" : {
+        "tags" : [ "beitai-collection-controller" ],
+        "summary" : "获取贝泰比赛直播信息（补充流程）\n 处理未在 `RBasicData` 中建立贝泰赛事、赛季映射关系的比赛，供调度任务补充采集。\n ```yaml\n errorCode:\n - 31: 服务异常\n - 32: 服务调用失败\n thirdParty:\n - 比赛直播信息接口：GET /live/info?matchid={matchId}\n dbTables:\n - beitai_football_match 赛程信息\n - beitai_football_match_live 直播比赛完整信息\n - beitai_football_period 比赛阶段比分信息\n - beitai_football_event 比赛事件信息\n scope:\n - 仅处理未映射赛事/赛季比赛\n - 不阻塞主流程接口返回\n ```",
+        "description" : "获取贝泰比赛直播信息（补充流程）\n 处理未在 `RBasicData` 中建立贝泰赛事、赛季映射关系的比赛，供调度任务补充采集。\n ```yaml\n errorCode:\n - 31: 服务异常\n - 32: 服务调用失败\n thirdParty:\n - 比赛直播信息接口：GET /live/info?matchid={matchId}\n dbTables:\n - beitai_football_match 赛程信息\n - beitai_football_match_live 直播比赛完整信息\n - beitai_football_period 比赛阶段比分信息\n - beitai_football_event 比赛事件信息\n scope:\n - 仅处理未映射赛事/赛季比赛\n - 不阻塞主流程接口返回\n ```",
+        "operationId" : "getMatchLiveInfoSupplement",
+        "responses" : {
+          "200" : {
+            "description" : "CommonResult<?> 补充流程比赛直播信息处理结果",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/CommonResultObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/beitai/match/event/core" : {
+      "get" : {
+        "tags" : [ "beitai-collection-controller" ],
+        "summary" : "获取贝泰比赛直播信息（主流程）\n 只处理 `RBasicData` 中已建立贝泰赛事、赛季映射关系的比赛，优先更新核心比赛实时数据。\n ```yaml\n errorCode:\n - 31: 服务异常\n - 32: 服务调用失败\n thirdParty:\n - 比赛直播信息接口：GET /live/info?matchid={matchId}\n dbTables:\n - beitai_football_match 赛程信息\n - beitai_football_match_live 直播比赛完整信息\n - beitai_football_period 比赛阶段比分信息\n - beitai_football_event 比赛事件信息\n scope:\n - 仅处理已映射赛事/赛季比赛\n - 返回前完成主流程比赛四张表更新\n ```",
+        "description" : "获取贝泰比赛直播信息（主流程）\n 只处理 `RBasicData` 中已建立贝泰赛事、赛季映射关系的比赛，优先更新核心比赛实时数据。\n ```yaml\n errorCode:\n - 31: 服务异常\n - 32: 服务调用失败\n thirdParty:\n - 比赛直播信息接口：GET /live/info?matchid={matchId}\n dbTables:\n - beitai_football_match 赛程信息\n - beitai_football_match_live 直播比赛完整信息\n - beitai_football_period 比赛阶段比分信息\n - beitai_football_event 比赛事件信息\n scope:\n - 仅处理已映射赛事/赛季比赛\n - 返回前完成主流程比赛四张表更新\n ```",
+        "operationId" : "getMatchLiveInfoCore",
+        "responses" : {
+          "200" : {
+            "description" : "CommonResult<?> 主流程比赛直播信息处理结果",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/CommonResultObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/beitai/match/delete" : {
+      "get" : {
+        "tags" : [ "beitai-collection-controller" ],
+        "summary" : "获取贝泰删除的赛程数据\n 根据联赛ID获取该联赛下已删除的赛程信息\n ```yaml\n errorCode:\n - 31: 服务异常\n - 32: 服务调用失败\n thirdParty:\n - 删除赛程列表接口：GET /match/dels?tournamentid={tournamentId}\n dbTables:\n - beitai_football_match_deleted 删除的赛程信息\n ```",
+        "description" : "获取贝泰删除的赛程数据\n 根据联赛ID获取该联赛下已删除的赛程信息\n ```yaml\n errorCode:\n - 31: 服务异常\n - 32: 服务调用失败\n thirdParty:\n - 删除赛程列表接口：GET /match/dels?tournamentid={tournamentId}\n dbTables:\n - beitai_football_match_deleted 删除的赛程信息\n ```",
+        "operationId" : "getMatchDeletedList",
+        "responses" : {
+          "200" : {
+            "description" : "CommonResult<?> 删除的赛程数据",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/CommonResultObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/bd/match" : {
+      "get" : {
+        "tags" : [ "bd-collection-controller" ],
+        "summary" : "北单官网赛程抓取.",
+        "description" : "北单官网赛程抓取.\n 包含：胜平负、单场比分、总进球数、半全场胜平负、上下盘单双、胜负过关和下半场比分玩法的赛程数据；\n 通过访问https://www.bjlot.com/data/玩法idParlayGetGame.xml获取当前奖期的赛程；（注：库中存在2个或者2个以上个奖期的对阵数据时，才会更新两个奖期的赛程数据）\n ```yaml\n errorCode:\n - 31: 服务异常\n - 32: 服务调用失败\n * ```",
+        "operationId" : "bD200GrabResult",
+        "responses" : {
+          "200" : {
+            "description" : "@CommonResult<?> 初始化结果",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/CommonResultObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components" : {
+    "schemas" : {
+      "CommonResultObject" : {
+        "type" : "object",
+        "properties" : {
+          "code" : {
+            "type" : "integer",
+            "format" : "int32",
+            "description" : "错误码，成功取值为0.\n [详情参考链接](https://alidocs.dingtalk.com/i/nodes/ZQYprEoWowXRlEYdfekBjOD5W1waOeDk)"
+          },
+          "message" : {
+            "type" : "string",
+            "description" : "错误信息，成功取值为OK.\n 错误信息格式为：错误描述+换行+系统错误信息，根据不同用户使用环境的要求可对系统错误信息进行裁剪<br/>\n [详情参考链接](https://alidocs.dingtalk.com/i/nodes/nYMoO1rWx2RwME9dS3BQGMomJ47Z3je9?utm_scene=team_space&iframeQuery=anchorId%3Duu_llxgf7cvkj5ol48n5zo)"
+          },
+          "data" : {
+            "description" : "数据内容 array or object or null."
+          }
+        }
+      }
+    }
+  }
+}

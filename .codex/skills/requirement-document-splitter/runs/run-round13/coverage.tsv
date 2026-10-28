@@ -1,0 +1,35 @@
+status	start_line	end_line	module_id	note
+unmapped	40	430		
+parent-only	431	858	MOD-05	
+assigned	859	1249	MOD-05-07	
+parent-only	1250	2744	MOD-05	
+parent-only	2745	2746	MOD-06	
+parent-only	2747	2958	MOD-06-01	
+assigned	2959	3027	MOD-06-01-03	
+parent-only	3028	3293	MOD-06-01	
+parent-only	3294	3331	MOD-06	
+parent-only	3332	3333	MOD-06-03	
+assigned	3334	3416	MOD-06-03-01	
+assigned	3417	3446	MOD-06-03-02	
+parent-only	3447	3505	MOD-07	
+parent-only	3506	3507	MOD-07-02	
+assigned	3508	3567	MOD-07-02-01	
+parent-only	3568	3705	MOD-07-02	
+assigned	3706	3723	MOD-07-02-06	
+parent-only	3724	3795	MOD-07	
+unmapped	3796	4764		
+parent-only	4765	4766	MOD-11	
+parent-only	4767	4974	MOD-11-01	
+assigned	4975	5065	MOD-11-01-07	
+parent-only	5066	5084	MOD-11-01	
+assigned	5085	5163	MOD-11-01-09	
+parent-only	5164	5210	MOD-11-01	
+parent-only	5211	5349	MOD-11-02	
+assigned	5350	5432	MOD-11-02-05	
+parent-only	5433	5531	MOD-11-02	
+parent-only	5532	5691	MOD-11	
+unmapped	5692	5861		
+assigned	5862	6004	MOD-13	
+unmapped	6005	6255		
+assigned	6256	6299	MOD-15	
+unmapped	6300	6323		

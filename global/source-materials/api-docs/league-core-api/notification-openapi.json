@@ -1,0 +1,186 @@
+{
+  "openapi" : "3.1.0",
+  "info" : {
+    "title" : "OpenAPI definition",
+    "version" : "v0"
+  },
+  "servers" : [ {
+    "url" : "http://localhost:8080",
+    "description" : "Generated server url"
+  } ],
+  "paths" : {
+    "/api/notifications/{accountId}/declare-queue" : {
+      "post" : {
+        "tags" : [ "notification-controller" ],
+        "summary" : "Declare the queue and bindings for the specified user.",
+        "description" : "Declare the queue and bindings for the specified user.",
+        "operationId" : "updateUserQueueBindings",
+        "parameters" : [ {
+          "name" : "accountId",
+          "in" : "path",
+          "description" : "The user identifier",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "description" : "the request containing the set of topics",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "type" : "array",
+                "items" : {
+                  "type" : "string"
+                },
+                "uniqueItems" : true
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "additionalProperties" : { }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/notifications/{accountId}/mark-read" : {
+      "patch" : {
+        "tags" : [ "notification-controller" ],
+        "summary" : "Marks all unread notifications for the specified user as read.",
+        "description" : "Marks all unread notifications for the specified user as read.",
+        "operationId" : "markRead",
+        "parameters" : [ {
+          "name" : "accountId",
+          "in" : "path",
+          "description" : "the identifier of the user",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "additionalProperties" : { }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/healthz" : {
+      "get" : {
+        "tags" : [ "healthz-common-controller" ],
+        "operationId" : "getHealthz",
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "additionalProperties" : { }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/notifications/{accountId}" : {
+      "get" : {
+        "tags" : [ "notification-controller" ],
+        "summary" : "SSE endpoint for streaming notifications.",
+        "description" : "SSE endpoint for streaming notifications.",
+        "operationId" : "streamNotifications",
+        "parameters" : [ {
+          "name" : "accountId",
+          "in" : "path",
+          "description" : "The user identifier",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "Last-Event-ID",
+          "in" : "header",
+          "description" : "the SSE Last-Event-ID",
+          "required" : false,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "A SseEmitter",
+            "content" : {
+              "text/event-stream" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/org.springframework.web.servlet.mvc.method.annotation.SseEmitter"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "notification-controller" ],
+        "summary" : "Clean notification context for a specific user.",
+        "description" : "Clean notification context for a specific user.",
+        "operationId" : "stopNotifications",
+        "parameters" : [ {
+          "name" : "accountId",
+          "in" : "path",
+          "description" : "The user identifier",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "additionalProperties" : { }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components" : {
+    "schemas" : {
+      "org.springframework.web.servlet.mvc.method.annotation.SseEmitter" : {
+        "type" : "object",
+        "properties" : {
+          "timeout" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        }
+      }
+    }
+  }
+}

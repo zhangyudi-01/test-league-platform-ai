@@ -1,0 +1,17 @@
+# Local IDE and machine-specific state
+.idea/
+.vscode/
+.playwright-mcp/
+
+# Python and test caches
+__pycache__/
+*.py[cod]
+.pytest_cache/
+
+# Local database credentials
+global/source-materials/database-docs/database.toml
+
+# Local reports and temporary output
+report/
+*.log
+*.tmp

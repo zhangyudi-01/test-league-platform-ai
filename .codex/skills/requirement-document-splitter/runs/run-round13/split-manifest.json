@@ -1,0 +1,375 @@
+{
+  "schema_version": 2,
+  "created_at": "2026-10-27T02:10:48.860045+00:00",
+  "source": {
+    "path": "D:\\pythonProject\\test-league-platform-ai\\global\\source-materials\\current-requirement\\竞猜赛事运营系统需求PRD文档-13轮冲刺.md",
+    "kind": "markdown",
+    "raw_sha256": "55d007b7d14236f07014a15bd508a8334dd5442460e38072c73fdc649c593e84",
+    "canonical_sha256": "55d007b7d14236f07014a15bd508a8334dd5442460e38072c73fdc649c593e84",
+    "sha256": "55d007b7d14236f07014a15bd508a8334dd5442460e38072c73fdc649c593e84",
+    "line_count": 6328,
+    "stats": {
+      "source_kind": "markdown",
+      "line_count": 6328,
+      "heading_count": 159
+    },
+    "warnings": [],
+    "docx_options": {}
+  },
+  "modules_root": "D:\\pythonProject\\test-league-platform-ai\\modules",
+  "run_dir": "D:\\pythonProject\\test-league-platform-ai\\.codex\\skills\\requirement-document-splitter\\runs\\run-round13",
+  "plan_path": "D:\\pythonProject\\test-league-platform-ai\\.codex\\skills\\requirement-document-splitter\\runs\\run-round13\\split-plan.json",
+  "write_scope": "leaf",
+  "output_name": "00-module-requirement-pack.md",
+  "outputs": [
+    {
+      "module_id": "MOD-05-07",
+      "title": "草稿管理列表页",
+      "module_path": "D:\\pythonProject\\test-league-platform-ai\\modules\\MOD-05-北单赛程管理\\MOD-05-07-草稿管理列表页",
+      "output_path": "D:\\pythonProject\\test-league-platform-ai\\modules\\MOD-05-北单赛程管理\\MOD-05-07-草稿管理列表页\\00-module-requirement-pack.md",
+      "write_status": "unchanged",
+      "source_range": {
+        "start_line_index": 858,
+        "end_line_index_exclusive": 1249,
+        "start_line": 859,
+        "end_line": 1249
+      },
+      "source_slice_sha256": "98d0709d0cae6646df888be2a3eff554d0d58c7ba8bec99cf3fdd49a83648ee8",
+      "output_sha256": "98d0709d0cae6646df888be2a3eff554d0d58c7ba8bec99cf3fdd49a83648ee8",
+      "link_inventory": {
+        "image_count": 5,
+        "image_targets": [
+          "https://alidocs.oss-cn-zhangjiakou.aliyuncs.com/res/1wvqr797o00QOako/img/6563b611-dab6-4b5e-ba2d-b96cc6a59080.png",
+          "https://alidocs.oss-cn-zhangjiakou.aliyuncs.com/res/1wvqr797o00QOako/img/e0da0c3b-856d-4657-9b73-2bdac755def2.png",
+          "https://alidocs.oss-cn-zhangjiakou.aliyuncs.com/res/1wvqr797o00QOako/img/3acbca6f-b2c0-4be8-872a-3c1e3a2d8b89.png",
+          "https://alidocs.oss-cn-zhangjiakou.aliyuncs.com/res/1wvqr797o00QOako/img/68a7724a-58ec-467b-b475-84af57e1e607.png",
+          "https://alidocs.oss-cn-zhangjiakou.aliyuncs.com/res/1wvqr797o00QOako/img/562e0566-fe5a-4196-a853-7ed4f7624d00.png"
+        ],
+        "images": [
+          "![image.png](https://alidocs.oss-cn-zhangjiakou.aliyuncs.com/res/1wvqr797o00QOako/img/6563b611-dab6-4b5e-ba2d-b96cc6a59080.png)",
+          "![image.png](https://alidocs.oss-cn-zhangjiakou.aliyuncs.com/res/1wvqr797o00QOako/img/e0da0c3b-856d-4657-9b73-2bdac755def2.png)",
+          "![image.png](https://alidocs.oss-cn-zhangjiakou.aliyuncs.com/res/1wvqr797o00QOako/img/3acbca6f-b2c0-4be8-872a-3c1e3a2d8b89.png)",
+          "![image.png](https://alidocs.oss-cn-zhangjiakou.aliyuncs.com/res/1wvqr797o00QOako/img/68a7724a-58ec-467b-b475-84af57e1e607.png)",
+          "![09dd97e29d127954b53a79103ac9d99.png](https://alidocs.oss-cn-zhangjiakou.aliyuncs.com/res/1wvqr797o00QOako/img/562e0566-fe5a-4196-a853-7ed4f7624d00.png)"
+        ],
+        "link_count": 3,
+        "link_targets": [
+          "https://alidocs.dingtalk.com/i/nodes/l6Pm2Db8Dag2Yp5OC7GLn35qWxLq0Ee4?iframeQuery=anchorId%3DX02m5ao34w0g0qiq2eshr",
+          "https://alidocs.dingtalk.com/i/nodes/l6Pm2Db8Dag2Yp5OC7GLn35qWxLq0Ee4?iframeQuery=anchorId%3DX02m5exsd8r0my1ajwgjwko",
+          "https://alidocs.dingtalk.com/i/nodes/l6Pm2Db8Dag2Yp5OC7GLn35qWxLq0Ee4?iframeQuery=anchorId%3DX02mkc8khsi0gfylvr4d4ss"
+        ],
+        "links": [
+          "[请至钉钉文档查看附件《比赛列表赛事排序》。](https://alidocs.dingtalk.com/i/nodes/l6Pm2Db8Dag2Yp5OC7GLn35qWxLq0Ee4?iframeQuery=anchorId%3DX02m5ao34w0g0qiq2eshr)",
+          "[请至钉钉文档查看附件《赛事筛选列表排序》。](https://alidocs.dingtalk.com/i/nodes/l6Pm2Db8Dag2Yp5OC7GLn35qWxLq0Ee4?iframeQuery=anchorId%3DX02m5exsd8r0my1ajwgjwko)",
+          "[请至钉钉文档查看附件《草稿备注导出模板》。](https://alidocs.dingtalk.com/i/nodes/l6Pm2Db8Dag2Yp5OC7GLn35qWxLq0Ee4?iframeQuery=anchorId%3DX02mkc8khsi0gfylvr4d4ss)"
+        ]
+      },
+      "attachment_candidates": [],
+      "assets": []
+    },
+    {
+      "module_id": "MOD-06-01-03",
+      "title": "赛果审核",
+      "module_path": "D:\\pythonProject\\test-league-platform-ai\\modules\\MOD-06-比赛监控\\MOD-06-01-比赛赛程监控\\MOD-06-01-03-赛果审核",
+      "output_path": "D:\\pythonProject\\test-league-platform-ai\\modules\\MOD-06-比赛监控\\MOD-06-01-比赛赛程监控\\MOD-06-01-03-赛果审核\\00-module-requirement-pack.md",
+      "write_status": "unchanged",
+      "source_range": {
+        "start_line_index": 2958,
+        "end_line_index_exclusive": 3027,
+        "start_line": 2959,
+        "end_line": 3027
+      },
+      "source_slice_sha256": "174758f88bfe4331f3c4cec5e9b7b19b593af4aa35947901f9341d0eb2d92ebe",
+      "output_sha256": "174758f88bfe4331f3c4cec5e9b7b19b593af4aa35947901f9341d0eb2d92ebe",
+      "link_inventory": {
+        "image_count": 1,
+        "image_targets": [
+          "https://alidocs.oss-cn-zhangjiakou.aliyuncs.com/res/1wvqr797o00QOako/img/3e2f1d31-197d-4372-a98f-c5fd9f0034e8.png"
+        ],
+        "images": [
+          "![image.png](https://alidocs.oss-cn-zhangjiakou.aliyuncs.com/res/1wvqr797o00QOako/img/3e2f1d31-197d-4372-a98f-c5fd9f0034e8.png)"
+        ],
+        "link_count": 0,
+        "link_targets": [],
+        "links": []
+      },
+      "attachment_candidates": [
+        {
+          "path": "D:\\pythonProject\\test-league-platform-ai\\global\\source-materials\\current-requirement\\attachments\\赛事服务大平台数据模型设计.md",
+          "name": "赛事服务大平台数据模型设计.md",
+          "stem": "赛事服务大平台数据模型设计",
+          "sha256": "9cb24a07da577b8467bfed6e326c73db41fb6adf4bc12acb49479ab268ce2682",
+          "size_bytes": 101789,
+          "normalized_stem": "赛事服务大平台数据模型设计"
+        }
+      ],
+      "assets": []
+    },
+    {
+      "module_id": "MOD-06-03-01",
+      "title": "比赛列表",
+      "module_path": "D:\\pythonProject\\test-league-platform-ai\\modules\\MOD-06-比赛监控\\MOD-06-03-竞彩赛程监控\\MOD-06-03-01-比赛列表",
+      "output_path": "D:\\pythonProject\\test-league-platform-ai\\modules\\MOD-06-比赛监控\\MOD-06-03-竞彩赛程监控\\MOD-06-03-01-比赛列表\\00-module-requirement-pack.md",
+      "write_status": "unchanged",
+      "source_range": {
+        "start_line_index": 3333,
+        "end_line_index_exclusive": 3416,
+        "start_line": 3334,
+        "end_line": 3416
+      },
+      "source_slice_sha256": "cefa9187fed3aba2041e2142ef9dd398f108a514614a0809f7e6edb928e5ce1f",
+      "output_sha256": "cefa9187fed3aba2041e2142ef9dd398f108a514614a0809f7e6edb928e5ce1f",
+      "link_inventory": {
+        "image_count": 2,
+        "image_targets": [
+          "https://alidocs.oss-cn-zhangjiakou.aliyuncs.com/res/1wvqr797o00QOako/img/12c48c2d-c1d7-4a1a-b9f2-c3a61a68732f.png",
+          "https://alidocs.oss-cn-zhangjiakou.aliyuncs.com/res/1wvqr797o00QOako/img/15b8440e-d958-484e-bde7-4c77ab08c4ad.png"
+        ],
+        "images": [
+          "![image.png](https://alidocs.oss-cn-zhangjiakou.aliyuncs.com/res/1wvqr797o00QOako/img/12c48c2d-c1d7-4a1a-b9f2-c3a61a68732f.png)",
+          "![image.png](https://alidocs.oss-cn-zhangjiakou.aliyuncs.com/res/1wvqr797o00QOako/img/15b8440e-d958-484e-bde7-4c77ab08c4ad.png)"
+        ],
+        "link_count": 0,
+        "link_targets": [],
+        "links": []
+      },
+      "attachment_candidates": [],
+      "assets": []
+    },
+    {
+      "module_id": "MOD-06-03-02",
+      "title": "备注",
+      "module_path": "D:\\pythonProject\\test-league-platform-ai\\modules\\MOD-06-比赛监控\\MOD-06-03-竞彩赛程监控\\MOD-06-03-02-备注",
+      "output_path": "D:\\pythonProject\\test-league-platform-ai\\modules\\MOD-06-比赛监控\\MOD-06-03-竞彩赛程监控\\MOD-06-03-02-备注\\00-module-requirement-pack.md",
+      "write_status": "unchanged",
+      "source_range": {
+        "start_line_index": 3416,
+        "end_line_index_exclusive": 3446,
+        "start_line": 3417,
+        "end_line": 3446
+      },
+      "source_slice_sha256": "1014149bf1cc8968c2556f513c929fafd89dceb66f1a18d14ab98b8e1a2e76e2",
+      "output_sha256": "1014149bf1cc8968c2556f513c929fafd89dceb66f1a18d14ab98b8e1a2e76e2",
+      "link_inventory": {
+        "image_count": 1,
+        "image_targets": [
+          "https://alidocs.oss-cn-zhangjiakou.aliyuncs.com/res/1wvqr797o00QOako/img/ebb097c6-bd38-43ca-a673-e087eb92c70c.png"
+        ],
+        "images": [
+          "![image.png](https://alidocs.oss-cn-zhangjiakou.aliyuncs.com/res/1wvqr797o00QOako/img/ebb097c6-bd38-43ca-a673-e087eb92c70c.png)"
+        ],
+        "link_count": 0,
+        "link_targets": [],
+        "links": []
+      },
+      "attachment_candidates": [],
+      "assets": []
+    },
+    {
+      "module_id": "MOD-07-02-01",
+      "title": "告警列表",
+      "module_path": "D:\\pythonProject\\test-league-platform-ai\\modules\\MOD-07-异常管理\\MOD-07-02-告警管理\\MOD-07-02-01-告警列表",
+      "output_path": "D:\\pythonProject\\test-league-platform-ai\\modules\\MOD-07-异常管理\\MOD-07-02-告警管理\\MOD-07-02-01-告警列表\\00-module-requirement-pack.md",
+      "write_status": "unchanged",
+      "source_range": {
+        "start_line_index": 3507,
+        "end_line_index_exclusive": 3567,
+        "start_line": 3508,
+        "end_line": 3567
+      },
+      "source_slice_sha256": "c1027a150ff5b246e9286a1811d92f808802f6b7bacff6b42d991afe156770dd",
+      "output_sha256": "c1027a150ff5b246e9286a1811d92f808802f6b7bacff6b42d991afe156770dd",
+      "link_inventory": {
+        "image_count": 1,
+        "image_targets": [
+          "https://alidocs.oss-cn-zhangjiakou.aliyuncs.com/res/1wvqr797o00QOako/img/a1b5bbee-9a36-4d99-baaa-b0fe4a1e03f5.png"
+        ],
+        "images": [
+          "![image.png](https://alidocs.oss-cn-zhangjiakou.aliyuncs.com/res/1wvqr797o00QOako/img/a1b5bbee-9a36-4d99-baaa-b0fe4a1e03f5.png)"
+        ],
+        "link_count": 0,
+        "link_targets": [],
+        "links": []
+      },
+      "attachment_candidates": [],
+      "assets": []
+    },
+    {
+      "module_id": "MOD-07-02-06",
+      "title": "修改详情",
+      "module_path": "D:\\pythonProject\\test-league-platform-ai\\modules\\MOD-07-异常管理\\MOD-07-02-告警管理\\MOD-07-02-06-修改详情",
+      "output_path": "D:\\pythonProject\\test-league-platform-ai\\modules\\MOD-07-异常管理\\MOD-07-02-告警管理\\MOD-07-02-06-修改详情\\00-module-requirement-pack.md",
+      "write_status": "unchanged",
+      "source_range": {
+        "start_line_index": 3705,
+        "end_line_index_exclusive": 3723,
+        "start_line": 3706,
+        "end_line": 3723
+      },
+      "source_slice_sha256": "2841c83b8ae89973e50896383bf6c1217e6e64f42a409f619b5c8e85dcef3cd4",
+      "output_sha256": "2841c83b8ae89973e50896383bf6c1217e6e64f42a409f619b5c8e85dcef3cd4",
+      "link_inventory": {
+        "image_count": 0,
+        "image_targets": [],
+        "images": [],
+        "link_count": 0,
+        "link_targets": [],
+        "links": []
+      },
+      "attachment_candidates": [],
+      "assets": []
+    },
+    {
+      "module_id": "MOD-11-01-07",
+      "title": "新建赛季",
+      "module_path": "D:\\pythonProject\\test-league-platform-ai\\modules\\MOD-11-基础信息管理\\MOD-11-01-赛事管理\\MOD-11-01-07-新建赛季",
+      "output_path": "D:\\pythonProject\\test-league-platform-ai\\modules\\MOD-11-基础信息管理\\MOD-11-01-赛事管理\\MOD-11-01-07-新建赛季\\00-module-requirement-pack.md",
+      "write_status": "unchanged",
+      "source_range": {
+        "start_line_index": 4974,
+        "end_line_index_exclusive": 5065,
+        "start_line": 4975,
+        "end_line": 5065
+      },
+      "source_slice_sha256": "45c2a1ea44deade4b6828d640de6b0e8ba99461912fe5604baa670bc104b0ce7",
+      "output_sha256": "45c2a1ea44deade4b6828d640de6b0e8ba99461912fe5604baa670bc104b0ce7",
+      "link_inventory": {
+        "image_count": 2,
+        "image_targets": [
+          "https://alidocs.oss-cn-zhangjiakou.aliyuncs.com/res/8oLl9yz6yBzklapY/img/f5415346-a899-4651-9245-240d2871128a.png",
+          "https://alidocs.oss-cn-zhangjiakou.aliyuncs.com/res/8oLl9yz6yBzklapY/img/aa33cfa7-ee94-4fb3-bbe5-bb9ac91a2da3.png"
+        ],
+        "images": [
+          "![image.png](https://alidocs.oss-cn-zhangjiakou.aliyuncs.com/res/8oLl9yz6yBzklapY/img/f5415346-a899-4651-9245-240d2871128a.png)",
+          "![image.png](https://alidocs.oss-cn-zhangjiakou.aliyuncs.com/res/8oLl9yz6yBzklapY/img/aa33cfa7-ee94-4fb3-bbe5-bb9ac91a2da3.png)"
+        ],
+        "link_count": 0,
+        "link_targets": [],
+        "links": []
+      },
+      "attachment_candidates": [],
+      "assets": []
+    },
+    {
+      "module_id": "MOD-11-01-09",
+      "title": "关联球队",
+      "module_path": "D:\\pythonProject\\test-league-platform-ai\\modules\\MOD-11-基础信息管理\\MOD-11-01-赛事管理\\MOD-11-01-09-关联球队",
+      "output_path": "D:\\pythonProject\\test-league-platform-ai\\modules\\MOD-11-基础信息管理\\MOD-11-01-赛事管理\\MOD-11-01-09-关联球队\\00-module-requirement-pack.md",
+      "write_status": "unchanged",
+      "source_range": {
+        "start_line_index": 5084,
+        "end_line_index_exclusive": 5163,
+        "start_line": 5085,
+        "end_line": 5163
+      },
+      "source_slice_sha256": "3d82851d43e83b605386259f83f372641c47fb7067c9d5ea29cf68b566da30e3",
+      "output_sha256": "3d82851d43e83b605386259f83f372641c47fb7067c9d5ea29cf68b566da30e3",
+      "link_inventory": {
+        "image_count": 1,
+        "image_targets": [
+          "https://alidocs.oss-cn-zhangjiakou.aliyuncs.com/res/8oLl9yz6yBzklapY/img/b942e160-f91f-4bc4-b44a-b1820d108605.png"
+        ],
+        "images": [
+          "![image.png](https://alidocs.oss-cn-zhangjiakou.aliyuncs.com/res/8oLl9yz6yBzklapY/img/b942e160-f91f-4bc4-b44a-b1820d108605.png)"
+        ],
+        "link_count": 0,
+        "link_targets": [],
+        "links": []
+      },
+      "attachment_candidates": [],
+      "assets": []
+    },
+    {
+      "module_id": "MOD-11-02-05",
+      "title": "匹配球队",
+      "module_path": "D:\\pythonProject\\test-league-platform-ai\\modules\\MOD-11-基础信息管理\\MOD-11-02-球队管理\\MOD-11-02-05-匹配球队",
+      "output_path": "D:\\pythonProject\\test-league-platform-ai\\modules\\MOD-11-基础信息管理\\MOD-11-02-球队管理\\MOD-11-02-05-匹配球队\\00-module-requirement-pack.md",
+      "write_status": "unchanged",
+      "source_range": {
+        "start_line_index": 5349,
+        "end_line_index_exclusive": 5432,
+        "start_line": 5350,
+        "end_line": 5432
+      },
+      "source_slice_sha256": "3860c9a71524387892982aee3f4120548744ee7661f9f5b4e5e39bc67acdf03f",
+      "output_sha256": "3860c9a71524387892982aee3f4120548744ee7661f9f5b4e5e39bc67acdf03f",
+      "link_inventory": {
+        "image_count": 3,
+        "image_targets": [
+          "https://alidocs.oss-cn-zhangjiakou.aliyuncs.com/res/1wvqr797o00QOako/img/93afc589-2988-4e58-9aa6-503bb2b11239.png",
+          "https://alidocs.oss-cn-zhangjiakou.aliyuncs.com/res/1wvqr797o00QOako/img/0eb6141c-0962-4f4f-bfa2-fefb2e5f959b.png",
+          "https://alidocs.oss-cn-zhangjiakou.aliyuncs.com/res/1wvqr797o00QOako/img/73eb8b4c-9ddb-489f-bd9c-383f5072acb4.png"
+        ],
+        "images": [
+          "![image.png](https://alidocs.oss-cn-zhangjiakou.aliyuncs.com/res/1wvqr797o00QOako/img/93afc589-2988-4e58-9aa6-503bb2b11239.png)",
+          "![image.png](https://alidocs.oss-cn-zhangjiakou.aliyuncs.com/res/1wvqr797o00QOako/img/0eb6141c-0962-4f4f-bfa2-fefb2e5f959b.png)",
+          "![image.png](https://alidocs.oss-cn-zhangjiakou.aliyuncs.com/res/1wvqr797o00QOako/img/73eb8b4c-9ddb-489f-bd9c-383f5072acb4.png)"
+        ],
+        "link_count": 0,
+        "link_targets": [],
+        "links": []
+      },
+      "attachment_candidates": [],
+      "assets": []
+    },
+    {
+      "module_id": "MOD-13",
+      "title": "操作日志",
+      "module_path": "D:\\pythonProject\\test-league-platform-ai\\modules\\MOD-13-操作日志",
+      "output_path": "D:\\pythonProject\\test-league-platform-ai\\modules\\MOD-13-操作日志\\00-module-requirement-pack.md",
+      "write_status": "unchanged",
+      "source_range": {
+        "start_line_index": 5861,
+        "end_line_index_exclusive": 6004,
+        "start_line": 5862,
+        "end_line": 6004
+      },
+      "source_slice_sha256": "63f15d357341dbe7918a0d1b80400758728b1857d1aca3199b97f52c18c7db5a",
+      "output_sha256": "63f15d357341dbe7918a0d1b80400758728b1857d1aca3199b97f52c18c7db5a",
+      "link_inventory": {
+        "image_count": 1,
+        "image_targets": [
+          "https://alidocs.oss-cn-zhangjiakou.aliyuncs.com/res/8oLl9aEkb5pylapY/img/46aba095-41bc-4a46-abd9-11ca1cbed5cb.png"
+        ],
+        "images": [
+          "![image.png](https://alidocs.oss-cn-zhangjiakou.aliyuncs.com/res/8oLl9aEkb5pylapY/img/46aba095-41bc-4a46-abd9-11ca1cbed5cb.png)"
+        ],
+        "link_count": 0,
+        "link_targets": [],
+        "links": []
+      },
+      "attachment_candidates": [],
+      "assets": []
+    },
+    {
+      "module_id": "MOD-15",
+      "title": "系统权限",
+      "module_path": "D:\\pythonProject\\test-league-platform-ai\\modules\\MOD-15-系统权限",
+      "output_path": "D:\\pythonProject\\test-league-platform-ai\\modules\\MOD-15-系统权限\\00-module-requirement-pack.md",
+      "write_status": "created",
+      "source_range": {
+        "start_line_index": 6255,
+        "end_line_index_exclusive": 6299,
+        "start_line": 6256,
+        "end_line": 6299
+      },
+      "source_slice_sha256": "c6df68069c50dfa177199c612815fe3d5f1770b7d79f3905fd1d93d6fa019e3c",
+      "output_sha256": "c6df68069c50dfa177199c612815fe3d5f1770b7d79f3905fd1d93d6fa019e3c",
+      "link_inventory": {
+        "image_count": 0,
+        "image_targets": [],
+        "images": [],
+        "link_count": 0,
+        "link_targets": [],
+        "links": []
+      },
+      "attachment_candidates": [],
+      "assets": []
+    }
+  ],
+  "summary": {
+    "planned_modules": 20,
+    "written_outputs": 11,
+    "unmapped_leaf_modules": []
+  }
+}

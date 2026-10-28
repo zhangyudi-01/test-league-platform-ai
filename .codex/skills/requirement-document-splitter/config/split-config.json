@@ -1,0 +1,18 @@
+{
+  "schema_version": 2,
+  "source": "d:\\pythonProject\\test-league-platform-ai\\global\\source-materials\\current-requirement\\竞猜赛事运营系统需求PRD文档-13轮冲刺.md",
+  "source_format": "markdown",
+  "modules_root": "d:\\pythonProject\\test-league-platform-ai\\modules",
+  "attachments_root": "d:\\pythonProject\\test-league-platform-ai\\global\\source-materials\\current-requirement\\attachments",
+  "scope_headings": ["产品详细功能说明"],
+  "stop_headings": ["非功能性需求"],
+  "run_dir": "d:\\pythonProject\\test-league-platform-ai\\.codex\\skills\\requirement-document-splitter\\runs\\run-round13",
+  "output_name": "00-module-requirement-pack.md",
+  "write_scope": "leaf",
+  "module_dir_pattern": "^(?P<prefix>[A-Za-z]+)-(?P<id>\\d+(?:-\\d+)*)-(?P<title>.+)$",
+  "agent": "none",
+  "agent_scope": "problems",
+  "agent_task": "review",
+  "claude_command": "",
+  "codex_command": ""
+}
