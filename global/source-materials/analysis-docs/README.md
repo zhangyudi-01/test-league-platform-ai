@@ -9,6 +9,8 @@
 | `竞猜赛事运营系统整体架构与业务逻辑深度分析报告-完整版.md` | 最终完整版（含第 13 轮冲刺竞彩全链路）：项目概述/模块划分/业务流程/数据模型/微服务架构/风险 | PRD(至13轮) + 数据模型设计 + 数据库设计文档 + 第13轮竞彩数据库变更 + SQL DDL(20261026) + 8 份 OpenAPI + test2_newgoal 实库核验 |
 | `竞猜赛事运营系统-ER图.md` | 基于真实表结构的 mermaid ER 图（9 张：总览/主数据/标准层/赛程域/事件任务变更/权限/采集层/竞彩域(13轮)/生命周期时序） | SQL DDL(20261026) + 第13轮竞彩表设计 + 实库核验 + OpenAPI |
 | `竞猜赛事运营系统-表模块接口追溯矩阵.md` | 表 ↔ 模块 ↔ 接口 ↔ 权限点四方追溯矩阵（含第 13 轮竞彩与告警修改新增接口、反向索引与三方差异说明） | 实库 toto_permission.urls(149+1条) + 第13轮权限SQL + OpenAPI + PRD 操作日志 |
+| [`ai-interface-test-framework/ai-interface-test-framework-design.md`](./ai-interface-test-framework/ai-interface-test-framework-design.md) | 四 Skill 接口测试流程：单接口分析、测试方案内含测试点、适用时的独立 SQL oracle 与自动化实施方案、按场景组同步完成数据准备/Excel 用例/pytest 脚本，并依据实测覆盖收敛功能残余 | MOD-06-03 竞彩赛程监控分析产物 + 测试工程规范 + 现有测试 Skills |
+| [`ai-interface-test-framework/skill-designs/README.md`](./ai-interface-test-framework/skill-designs/README.md) | 四个接口测试 Skill 的详细设计索引、职责边界、输入输出和四列测试点表格公共约定；SQL oracle 按接口类型适用 | 框架总设计 + 竞彩模块分析产物 + 球队智能推荐全链路样例 + 测试工程规范 |
 
 ## 信息源位置
 

@@ -732,7 +732,7 @@ erDiagram
         int league_id FK
         int home_team_id FK
         int away_team_id FK
-        int sell_status "0待开售/1在售/2停售/3已开奖"
+        int sell_status "0待开售/1已开售/2暂停销售/3已停售/4已开奖"
         varchar match_status "竞彩赛事状态"
         int home_half_score
         int away_half_score
@@ -751,7 +751,7 @@ erDiagram
         int league_id FK
         int home_team_id FK
         int away_team_id FK
-        int sell_status "0待开售/1在售/2停售/3已开奖"
+        int sell_status "0待开售/1已开售/2暂停销售/3已停售/4已开奖"
         varchar part_end "全场比分(注意格式=客队:主队)"
         int away_score "★第13轮新增: 客队全场比分(part_end左值)"
         int home_score "★第13轮新增: 主队全场比分(part_end右值)"

@@ -1,0 +1,37 @@
+[
+  {
+    "source": "D:\\pythonProject\\sdd-league-platform\\tests\\test-league-platform\\testsuites\\data-bff\\team\\test_dependent_file\\球队智能推荐需求-第10轮迭代.md",
+    "bytes": 902,
+    "sha256": "6637023E47F66A84180D92A63293A4680438683EDCAFE4357A8B4729189E02E6"
+  },
+  {
+    "source": "D:\\pythonProject\\sdd-league-platform\\tests\\test-league-platform\\testsuites\\data-bff\\team\\test_dependent_file\\球队智能推荐需求-第13轮迭代.md",
+    "bytes": 4393,
+    "sha256": "3860C9A71524387892982AEE3F4120548744EE7661F9F5B4E5E39BC67ACDF03F"
+  },
+  {
+    "source": "D:\\pythonProject\\sdd-league-platform\\tests\\test-league-platform\\testsuites\\data-bff\\team\\test_dependent_file\\球队智能推荐第13轮需求适配方案.md",
+    "bytes": 14010,
+    "sha256": "E900B9DB3A8DA2BE175B24887E8F9A28FF109850963A87B286F62EA468373E75"
+  },
+  {
+    "source": "D:\\pythonProject\\sdd-league-platform\\tests\\test-league-platform\\testsuites\\data-bff\\team\\test_dependent_file\\球队智能推荐查询.openapi.json",
+    "bytes": 8129,
+    "sha256": "5242779EC91EC753FC598118FFBBA52F56BAC23F6CC8575E08D2AC3F3FDA44A2"
+  },
+  {
+    "source": "D:\\pythonProject\\sdd-league-platform\\tests\\test-league-platform\\testsuites\\data-bff\\team\\test_dependent_file\\球队智能推荐接口查询SQL.sql",
+    "bytes": 13187,
+    "sha256": "7E8DE777EE19CA5492C50ECF0AE9C10E5E4F9C257933961DE6C3BC143E49C0C7"
+  },
+  {
+    "source": "D:\\pythonProject\\sdd-league-platform\\tests\\test-league-platform\\testsuites\\data-bff\\team\\test_team_smart_recommendation_get.py",
+    "bytes": 18748,
+    "sha256": "952F0CC3C3E2B4AF13BE3B04F806945F201DCA4DA4720027A37F6A6A7EB2DF73"
+  },
+  {
+    "source": "D:\\pythonProject\\sdd-league-platform\\tests\\test-league-platform\\data\\data-bff\\接口测试用例_球队智能推荐查询.xlsx",
+    "bytes": 23347,
+    "sha256": "A2941228DF7B4B0EDA27049B505276BCF64F2D0478DA027B079C7F87072B69DE"
+  }
+]

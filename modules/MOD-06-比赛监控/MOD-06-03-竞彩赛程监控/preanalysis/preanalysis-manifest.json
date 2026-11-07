@@ -1,0 +1,20 @@
+{
+  "schema_version": "preanalysis/v1",
+  "module_root": "..",
+  "artifacts": {
+    "readme": "README.md",
+    "module_requirement": "00-module-requirement-pack.md",
+    "context_pack": "01-context-pack.md",
+    "rsu_map": "02-sentence-test-point-map.md",
+    "clarifications": "03-clarification-questions.md",
+    "context_card_index": "context-cards/README.md"
+  },
+  "resource_roles": {
+    "global_context": "SRC-GLOBAL",
+    "module_requirement": "SRC-MOD",
+    "module_context": "CTX"
+  },
+  "output": {
+    "test_points_dir": "../test-points"
+  }
+}

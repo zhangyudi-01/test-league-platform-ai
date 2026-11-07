@@ -1,0 +1,137 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "默认模块",
+    "description": "",
+    "version": "1.0.0"
+  },
+  "tags": [
+    {
+      "name": "team-smart-recommendation-controller"
+    }
+  ],
+  "paths": {
+    "/relations/team/recommendations": {
+      "get": {
+        "summary": "球队智能推荐查询",
+        "deprecated": false,
+        "description": "球队智能推荐查询.\n\n <p>当数据中心球队已匹配 A 数据源球队、当前标签页 B 数据源球队未匹配时，前端调用本接口查询\n B 数据源下的推荐球队。接口只返回推荐结果；PRD 中“最近 10 场比赛、同开赛时间、同赛季、\n 同主客角色、统计出现次数”的描述是推荐算法说明，不单独提供上下文比赛接口。</p>\n\n <p>算法口径：</p>\n <ol>\n     <li>currentDataSource=1（纳米）时，以贝泰为基准源、纳米为目标源；</li>\n     <li>currentDataSource=3（贝泰）时，以纳米为基准源、贝泰为目标源；</li>\n     <li>currentDataSource=2（同兴）暂不参与推荐，返回成功和空列表；</li>\n     <li>取基准源球队最近 10 场足球比赛，按同开赛时间、同赛季、同主客角色统计目标源候选球队出现次数；</li>\n     <li>仅返回出现次数最高的候选球队，并按球队简称正序排列。</li>\n </ol>\n\n ```yaml\n errorCode:\n - 31: 服务异常\n - 2: teamId不能为空\n - 2: 当前数据源不存在\n - 2: 球队信息不存在\n ```",
+        "operationId": "recommend",
+        "tags": [
+          "team-smart-recommendation-controller"
+        ],
+        "parameters": [
+          {
+            "name": "teamId",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "currentDataSource",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "Cookie",
+            "in": "header",
+            "description": "",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "@CommonResult\\<List<TeamSmartRecommendationResponse>\\> 推荐候选球队列表",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CommonResultListTeamSmartRecommendationResponse"
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "CommonResultListTeamSmartRecommendationResponse": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer",
+            "format": "int32",
+            "description": "错误码，成功取值为0.\n [详情参考链接](https://alidocs.dingtalk.com/i/nodes/ZQYprEoWowXRlEYdfekBjOD5W1waOeDk)"
+          },
+          "message": {
+            "type": "string",
+            "description": "错误信息，成功取值为OK.\n 错误信息格式为：错误描述+换行+系统错误信息，根据不同用户使用环境的要求可对系统错误信息进行裁剪<br/>\n [详情参考链接](https://alidocs.dingtalk.com/i/nodes/nYMoO1rWx2RwME9dS3BQGMomJ47Z3je9?utm_scene=team_space&iframeQuery=anchorId%3Duu_llxgf7cvkj5ol48n5zo)"
+          },
+          "data": {
+            "type": "array",
+            "description": "数据内容 array or object or null.",
+            "items": {
+              "$ref": "#/components/schemas/TeamSmartRecommendationResponse"
+            }
+          }
+        }
+      },
+      "TeamSmartRecommendationResponse": {
+        "type": "object",
+        "properties": {
+          "sourceType": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "sourceTeamId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "teamNameZh": {
+            "type": "string"
+          },
+          "teamShortNameZh": {
+            "type": "string"
+          },
+          "teamNameEn": {
+            "type": "string"
+          },
+          "recommendCount": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "matchStatus": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "checkStatus": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "manualTeamId": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      }
+    },
+    "responses": {},
+    "securitySchemes": {}
+  },
+  "servers": [],
+  "security": []
+}

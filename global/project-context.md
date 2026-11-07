@@ -238,7 +238,7 @@ global/
   5. `POST /sporttery/basketball/schedule`（篮球受注赛程 `basketball/getMatchListV1.qry?clientCode=3001`）→ 幂等落库 `sporttery_basketball_team`、`sporttery_basketball_league`、`sporttery_basketball_match`；
   6. `POST /sporttery/basketball/odds`（篮球混合过关赔率 `basketball/getMatchCalculatorV1.qry?channel=c`）→ 按 `MNL/HDC/HILO/WNM` 写入篮球 4 张最新赔率表；
   7. `POST /sporttery/basketball/result`（篮球赛果 `getUniformBasketballMatchResultV1.qry`）→ **注意主客顺序**：接口 `finalScore` 按**「客队比分-主队比分」**返回，存入 `part_end` 为**「客队:主队」**（冒号分隔），同时拆分左值→`away_score`、右值→`home_score` 整型列（注：2026-10-26 实库核验显示存量 10,668 条已开奖记录的 `home_score`/`away_score` 拆分迁移 SQL 尚未执行，当前为 `NULL`）。
-- **每轮调度采集顺序**：`赛程 -> 最新赔率 -> 足球历史赔率 -> 赛果 -> 状态推进`（历史赔率必须在赛果将状态推进为 `3-已开奖` 之前执行，以免候选比赛被过滤）。
+- **每轮调度采集顺序**：`赛程 -> 最新赔率 -> 足球历史赔率 -> 赛果 -> 状态推进`（历史赔率必须在赛果将状态推进为 `4-已开奖` 之前执行，以免候选比赛被过滤）。
 - **字段缺失与保护规则**：
   - 关键 ID（`matchId`/`leagueId`/`homeTeamId`/`awayTeamId`）任一缺失：跳过该场写入与状态推进，记 `WARN` 日志，不阻断同批其他比赛；
   - 可空字段缺失：新记录存 `NULL`，**已有记录遇到上游 `NULL`/空串时保留库内旧值不被覆盖**；
@@ -301,7 +301,7 @@ global/
     9. **半场、全场比分**：**已开奖时**显示竞彩赛程自身的比分（`half_score`/`full_score` 或篮球 `part_end`）；**未开奖时**显示系统采集的开奖用比分（`s_match`）；无比分时显示 `-`；比分顺序与主客队一致；
     10. **事件**：显示对应赛程的竞彩事件条数（`sporttery_match_event`），超链接样式，**条数为 0 时置灰**；点击弹窗显示事件记录（事件时间、标题、异常详情，按事件时间倒序排列）；
     11. **备注**：显示对应赛程的备注条数（`sporttery_match_remark`），超链接样式；点击弹出备注框；
-    12. **开奖状态**：显示竞彩赛程开奖状态，包含 `未开奖`（`sell_status in (1,2)`）、`已开奖`（`sell_status = 3`）。
+    12. **开奖状态**：显示竞彩赛程开奖状态，包含 `未开奖`（`sell_status in (0,1,2,3)`，对应 0待开售/1已开售/2暂停销售/3已停售）、`已开奖`（`sell_status = 4`）。
   - **异常事件行背景标色规则（按事件更新时间 `update_time` 最大的竞彩事件填充）**：
     - `比赛提前` → **红色**；
     - `比赛推迟` → **黄色**；
@@ -462,6 +462,6 @@ sporttery_football_match / sporttery_basketball_match (官方 match_id)
 2. **竞彩篮球比分主客顺序翻转**：
    - 中国竞彩官网篮球接口返回的赛果比分是「客队在前、主队在后」，而本系统内部展示与存储统一要求「主客顺序与竞彩赛程一致（主队在前、客队在后）」。测试竞彩篮球赛果采集与「竞彩赛程监控」比分展示时，必须核对主客得分是否已正确翻转对齐。
 3. **竞彩赛程监控「已开奖 vs 未开奖」双轨比分来源**：
-   - 竞彩赛程监控列表中，**未开奖**（`sell_status in (1,2)`）显示标准化比赛 `s_match` 的开奖用比分；**已开奖**（`sell_status = 3`）切换为显示竞彩赛程表自身的比分（`half_score`/`full_score` 或篮球 `part_end`）。这一切换点是极高价值的测试点。
+   - 竞彩赛程监控列表中，**未开奖**（`sell_status in (0,1,2,3)`，对应 0待开售/1已开售/2暂停销售/3已停售）显示标准化比赛 `s_match` 的开奖用比分；**已开奖**（`sell_status = 4`）切换为显示竞彩赛程表自身的比分（`half_score`/`full_score` 或篮球 `part_end`）。这一切换点是极高价值的测试点。
 4. **文档滞后与四类依据纪律**：
    - 历史数据库设计 Markdown 与实库存在多处演进差异，遇到文档未明文规定或实库存在例外的场景，严格遵循《必读-测试点编写规范.md》，通过「待确认问题」清单向用户暴露并确认，绝不自行脑补断言。

@@ -1,0 +1,97 @@
+{
+  "schema_version": "interface-analysis/v1",
+  "module_root": "..",
+  "module_name": "MOD-06-03 竞彩赛程监控",
+  "sources": {
+    "module_requirement": "../preanalysis/00-module-requirement-pack.md",
+    "preanalysis_context": "../preanalysis/01-context-pack.md",
+    "rsu_map": "../preanalysis/02-sentence-test-point-map.md",
+    "clarifications": "../preanalysis/03-clarification-questions.md",
+    "context_card_index": "../preanalysis/context-cards/README.md",
+    "data_closure_index": "../preanalysis/data-closures/README.md",
+    "reference_review": "../reference-analysis/match-monitoring-reuse-review.md",
+    "openapi": "../../../../global/source-materials/api-docs/league-api-definition/league-core-api/data-backend-openapi.json",
+    "database_design": "../../../../global/source-materials/database-docs/第十三轮冲刺竞彩抓取数据库设计和变更.md",
+    "database_ddl": "../../../../global/source-materials/database-docs/北单运营系统-test2_newgoal-202610261418.sql",
+    "service": "../../../../../../apps/league-platform/data-backend/src/main/java/com/league/backend/service/sporttery/SportteryMatchMonitorService.java",
+    "rules": "../../../../../../apps/league-platform/data-backend/src/main/java/com/league/backend/service/sporttery/SportteryMatchMonitorRules.java",
+    "controller": "../../../../../../apps/league-platform/data-backend/src/main/java/com/league/backend/controller/sporttery/SportteryMatchMonitorController.java"
+  },
+  "overview": "00-interface-overview.md",
+  "shared_contract": "01-shared-contract.md",
+  "interfaces": [
+    {
+      "api_id": "API-001",
+      "method": "GET",
+      "path": "/sporttery/match-monitor",
+      "operation_id": "listMatchMonitor",
+      "analysis": "../interfaces/API-001-get-match-monitor/interface-analysis.md",
+      "rsu_refs": ["RSU-001", "RSU-002", "RSU-003", "RSU-004", "RSU-005", "RSU-006", "RSU-007", "RSU-008"],
+      "related_function_only_rsu_refs": ["RSU-009", "RSU-010"],
+      "context_refs": ["FC-001", "FC-002", "DC-001", "DC-002", "ADC-001"],
+      "clarifications": "../interfaces/API-001-get-match-monitor/clarification-questions.md",
+      "planned_test_script": {
+        "path": "../../../../../test-league-platform/testsuites/data-bff/sporttery_match_monitoring/test_get_match_monitor.py",
+        "status": "planned-not-created"
+      }
+    },
+    {
+      "api_id": "API-002",
+      "method": "GET",
+      "path": "/sporttery/match-monitor/live",
+      "operation_id": "getSMatchLive",
+      "analysis": "../interfaces/API-002-get-match-live/interface-analysis.md",
+      "rsu_refs": ["RSU-004", "RSU-011"],
+      "context_refs": ["FC-002", "DC-002", "ADC-001"],
+      "clarifications": "../interfaces/API-002-get-match-live/clarification-questions.md",
+      "planned_test_script": {
+        "path": "../../../../../test-league-platform/testsuites/data-bff/sporttery_match_monitoring/test_get_match_live.py",
+        "status": "planned-not-created"
+      }
+    },
+    {
+      "api_id": "API-003",
+      "method": "GET",
+      "path": "/sporttery/match-monitor/events",
+      "operation_id": "listEvents",
+      "analysis": "../interfaces/API-003-get-match-events/interface-analysis.md",
+      "rsu_refs": ["RSU-012"],
+      "context_refs": ["DC-003"],
+      "clarifications": "../interfaces/API-003-get-match-events/clarification-questions.md",
+      "planned_test_script": {
+        "path": "../../../../../test-league-platform/testsuites/data-bff/sporttery_match_monitoring/test_get_match_events.py",
+        "status": "planned-not-created"
+      }
+    },
+    {
+      "api_id": "API-004",
+      "method": "GET",
+      "path": "/sporttery/match-monitor/remarks",
+      "operation_id": "listRemarks",
+      "analysis": "../interfaces/API-004-get-match-remarks/interface-analysis.md",
+      "rsu_refs": ["RSU-013", "RSU-014", "RSU-015"],
+      "context_refs": ["FC-003", "DC-004"],
+      "clarifications": "../interfaces/API-004-get-match-remarks/clarification-questions.md",
+      "planned_test_script": {
+        "path": "../../../../../test-league-platform/testsuites/data-bff/sporttery_match_monitoring/test_get_match_remarks.py",
+        "status": "planned-not-created"
+      }
+    },
+    {
+      "api_id": "API-005",
+      "method": "POST",
+      "path": "/sporttery/match-monitor/remark",
+      "operation_id": "saveRemark",
+      "analysis": "../interfaces/API-005-save-match-remark/interface-analysis.md",
+      "rsu_refs": ["RSU-016"],
+      "context_refs": ["FC-003", "DC-004"],
+      "clarifications": "../interfaces/API-005-save-match-remark/clarification-questions.md",
+      "planned_test_script": {
+        "path": "../../../../../test-league-platform/testsuites/data-bff/sporttery_match_monitoring/test_save_match_remark.py",
+        "status": "planned-not-created"
+      }
+    }
+  ],
+  "script_suite": "../../../../../test-league-platform/testsuites/data-bff/sporttery_match_monitoring",
+  "script_suite_status": "planned-not-created"
+}
